@@ -398,9 +398,8 @@
                         var newContent = "";
                         // var url =" {{ route('home') }}";
                         var ASSET_URL = '{{ env('APP_URL') }}';
-                        var DETAIL_URL =
-                        '{{ env('APP_URL')/product/detail/ }}'
-                           
+                        var DETAIL_URL ='{{ env('APP_URL')}}./product/detail/';
+                        //    console.log(DETAIL_URL)
                         // console.log(products.name);
                         // Lặp qua danh sách $products và tạo nội dung mới
                         for (var i = 0; i < products.length; i++) {
