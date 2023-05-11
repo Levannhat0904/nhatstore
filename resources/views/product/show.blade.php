@@ -1,88 +1,56 @@
 @extends('layouts.client')
-@section('users')
-    @if (!empty($user))
-        <div class="dropdown">
-            {{-- <button class="dropbtn">Dropdown</button> --}}
-            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <div class="header__top__right__auth">
-                    <a href="#"><i class="fa fa-user"></i>{{ $user }}</a>
+@section('navbar')
+<section class="hero hero-normal">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <i class="fa fa-bars"></i>
+                        <span>Danh mục sản phẩm</span>
+                    </div>
+                    <ul>
+                        <li><a href="#">Điện thoại</a></li>
+                        <li><a href="#">Laptop</a></li>
+                        <li><a href="#">Máy tính bảng</a></li>
+                        {{-- <li><a href="#">Fruit & Nut Gifts</a></li>
+                        <li><a href="#">Fresh Berries</a></li>
+                        <li><a href="#">Ocean Foods</a></li> 
+                        <li><a href="#">Butter & Eggs</a></li>
+                        <li><a href="#">Fastfood</a></li>
+                        <li><a href="#">Fresh Onion</a></li>
+                        <li><a href="#">Papayaya & Crisps</a></li>
+                        <li><a href="#">Oatmeal</a></li>
+                        <li><a href="#">Fresh Bananas</a></li> --}}
+                    </ul>
                 </div>
-            </button>
-            <div class="dropdown-content">
-                <a class="dropdown-item" href="#" style="font-size: 1.6rem; text-align: left;"><i
-                        style="margin-right: 10px" class="fa fa-user"></i> Tài khoản </a>
-                <a class="dropdown-item" style="font-size: 1.6rem; text-align: left;" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
-                                 document.getElementById('logout-form').submit();"><i
-                        style="margin-right: 10px" class="fa fa-sign-in"></i>
-                    {{ __('Logout') }}
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
+            </div>
+            <div class="col-lg-9">
+                <div class="hero__search">
+                    <div class="hero__search__form">
+                        <form action="#">
+                            {{--  --}}
+                            <input type="text" placeholder="Bạn cần tìm gì?">
+                            <button type="submit" class="site-btn">SEARCH</button>
+                        </form>
+                    </div>
+                    <div class="hero__search__phone">
+                        <div class="hero__search__phone__icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="hero__search__phone__text">
+                            <h5>0559886909</h5>
+                            <span>support 24/7 time</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    @else
-        <div class="header__top__right__auth">
-            {{-- <a href="#"><i class="fa fa-user"></i>Login</a> --}}
-            <a class="dropdown-item" style="font-size: 1.6rem;background: none; text-align: left;"
-                href="{{ route('logout') }}"
-                onclick="event.preventDefault();
-                                 document.getElementById('logout-form').submit();"><i
-                    style="margin-right: 10px" class="fa fa-user"></i>
-                {{-- {{ __('Logout') }} Log in --}}Log in
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
-        </div>
-    @endif
-@endsection
-@section('user_responsive')
-    {{-- <div class="header__top__right__auth">
-        <a href="#"><i class="fa fa-user"></i>{{ $user }}</a>
-    </div> --}}
-    @if (!empty($user))
-        <div class="dropdown">
-            {{-- <button class="dropbtn">Dropdown</button> --}}
-            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                <div class="header__top__right__auth">
-                    <a href="#">
-                        <i class="fa fa-user"></i>
-                        {{ $user }}</a>
-                </div>
-            </button>
-            <div class="dropdown-content">
-                <a class="dropdown-item" href="#" style="font-size: 1.6rem; text-align: left;"><i
-                        style="margin-right: 10px" class="fa fa-user"></i> Tài khoản </a>
-                <a class="dropdown-item" style="font-size: 1.6rem; text-align: left;" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
-                                 document.getElementById('logout-form').submit();"><i
-                        style="margin-right: 10px" class="fa fa-sign-in"></i>
-                    {{ __('Logout') }}
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-            </div>
-        </div>
-    @else
-        <div class="header__top__right__auth">
-
-            <a class="" style="font-size: 1.6rem;background: none; text-align: left;" href="{{ route('logout') }}"
-                onclick="event.preventDefault();
-                                 document.getElementById('logout-form').submit();">
-                <i style="margin-right: 10px" class="fa fa-user"></i>
-                Log inn
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
-        </div>
-    @endif
+    </div>
+</section>
 @endsection
 @section('content')
+
     <!-- Hero Section Begin -->
 
     <!--hihi -->
@@ -550,3 +518,6 @@
 <!-- Footer Section End -->
 
 <!-- Js Plugins -->
+@section('script')
+<script src="{{ asset('js/main.js') }}"></script>
+@endsection

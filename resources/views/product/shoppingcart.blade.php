@@ -1,5 +1,4 @@
 @extends('layouts.client')
-
 @section('content')
     <section class="shoping-cart spad">
         <div class="container">

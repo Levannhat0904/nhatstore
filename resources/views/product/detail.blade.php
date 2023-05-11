@@ -86,7 +86,7 @@
                     </div>
                 </div>
                 <div class="col-lg-12">
-                    <p><b style="font-size: 30px">Thông tin sản phẩm</b> </p>
+                    <p><b style="font-size: 30px">Chi tiết sản phẩm</b> </p>
                     {!!$products->content!!}
                 </div>
             </div>
@@ -125,4 +125,7 @@
             </div>
         </div>
     </section>
+@endsection
+@section('script')
+<script src="{{ asset('js/main.js') }}"></script>
 @endsection

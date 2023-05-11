@@ -24,14 +24,14 @@
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }} " type="text/css">
     <link rel="stylesheet" href="{{ asset('css/slicknav.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    @yield('style')
 </head>
 
 <body>
     <!-- Page Preloder -->
-    <div id="preloder">
+    {{-- <div id="preloder">
         <div class="loader"></div>
-    </div>
+    </div> --}}
 
     <!-- Humberger Begin -->
     <div class="humberger__menu__overlay"></div>
@@ -63,7 +63,46 @@
                     <li><a href="#">English</a></li>
                 </ul>
             </div> --}}
-            @yield('user_responsive')
+            {{-- @yield('user_responsive') --}}
+            @if (!empty($user))
+        <div class="dropdown">
+            {{-- <button class="dropbtn">Dropdown</button> --}}
+            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <div class="header__top__right__auth">
+                    <a href="#">
+                        <i class="fa fa-user"></i>
+                        {{ $user }}</a>
+                </div>
+            </button>
+            <div class="dropdown-content">
+                <a class="dropdown-item" href="#" style="font-size: 1.6rem; text-align: left;"><i
+                        style="margin-right: 10px" class="fa fa-user"></i> Tài khoản </a>
+                <a class="dropdown-item" style="font-size: 1.6rem; text-align: left;" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();"><i
+                        style="margin-right: 10px" class="fa fa-sign-in"></i>
+                    {{ __('Logout') }}
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+            </div>
+        </div>
+    @else
+        <div class="header__top__right__auth">
+
+            <a class="" style="font-size: 1.6rem;background: none; text-align: left;" href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                <i style="margin-right: 10px" class="fa fa-user"></i>
+                Log inn
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+        </div>
+    @endif
             {{-- <div class="header__top__right__auth">
                 <a href="#"><i class="fa fa-user"></i> Login</a>
             </div> --}}
@@ -131,7 +170,52 @@
                                     <li><a href="#">English</a></li>
                                 </ul> --}}
                             </div>
-                            @yield('users')
+                            {{-- @yield('users') --}}
+
+                            @if (!empty($user))
+                                <div class="dropdown">
+                                    {{-- <button class="dropbtn">Dropdown</button> --}}
+                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <div class="header__top__right__auth">
+                                            <a href="#"><i class="fa fa-user"></i>{{ $user }}</a>
+                                        </div>
+                                    </button>
+                                    <div class="dropdown-content">
+                                        <a class="dropdown-item" href="#"
+                                            style="font-size: 1.6rem; text-align: left;"><i style="margin-right: 10px"
+                                                class="fa fa-user"></i> Tài khoản </a>
+                                        <a class="dropdown-item" style="font-size: 1.6rem; text-align: left;"
+                                            href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();"><i
+                                                style="margin-right: 10px" class="fa fa-sign-in"></i>
+                                            {{ __('Logout') }}
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            class="d-none">
+                                            @csrf
+                                        </form>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="header__top__right__auth">
+                                    {{-- <a href="#"><i class="fa fa-user"></i>Login</a> --}}
+                                    <a class="dropdown-item"
+                                        style="font-size: 1.6rem;background: none; text-align: left;"
+                                        href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();"><i
+                                            style="margin-right: 10px" class="fa fa-user"></i>
+                                        {{-- {{ __('Logout') }} Log in --}}Log in
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            @endif
+
                             {{-- <div class="header__top__right__auth">
                                 <a href="#"><i class="fa fa-user"></i> Login</a>
                             </div> --}}
@@ -187,61 +271,77 @@
         </div>
     </header>
     <!-- Header Section End -->
-    <section class="hero hero-normal">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="hero__categories">
-                        <div class="hero__categories__all">
-                            <i class="fa fa-bars"></i>
-                            <span>Danh mục sản phẩm</span>
-                        </div>
-                        <ul>
-                            <li><a href="#">Điện thoại</a></li>
-                            <li><a href="#">Laptop</a></li>
-                            <li><a href="#">Máy tính bảng</a></li>
-                            {{-- <li><a href="#">Fruit & Nut Gifts</a></li>
-                            <li><a href="#">Fresh Berries</a></li>
-                            <li><a href="#">Ocean Foods</a></li> 
-                            <li><a href="#">Butter & Eggs</a></li>
-                            <li><a href="#">Fastfood</a></li>
-                            <li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
-                            <li><a href="#">Fresh Bananas</a></li> --}}
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                {{--  --}}
-                                <input type="text" placeholder="Bạn cần tìm gì?">
-                                <button type="submit" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>
-                        <div class="hero__search__phone">
-                            <div class="hero__search__phone__icon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                            <div class="hero__search__phone__text">
-                                <h5>0559886909</h5>
-                                <span>support 24/7 time</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    @yield('navbar')
     @yield('content')
     <!-- Hero Section Begin -->
 
     <!-- Blog Section End -->
 
     <!-- Footer Section Begin -->
-    <footer class="footer spad">
+    <div id="footer-wp" style="box-sizing: border-box;font-size: 1.6rem;background-color: aliceblue">
+        <div id="foot-body">
+            <div class="wp-inner clearfix">
+                <div class="block" id="info-company">
+                    <h3 class="title">ISMART</h3>
+                    <p class="desc">ISMART luôn cung cấp luôn là sản phẩm chính hãng có thông tin rõ ràng, chính sách
+                        ưu đãi cực lớn cho khách hàng có thẻ thành viên.</p>
+                    <div id="payment">
+                        <div class="thumb">
+                            <img src="public/images/img-foot.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="block menu-ft" id="info-shop">
+                    <h3 class="title">Thông tin cửa hàng</h3>
+                    <ul class="list-item">
+                        <li>
+                            <p>106 - Trần Bình - Cầu Giấy - Hà Nội</p>
+                        </li>
+                        <li>
+                            <p>0987.654.321 - 0989.989.989</p>
+                        </li>
+                        <li>
+                            <p>vshop@gmail.com</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="block menu-ft policy" id="info-shop">
+                    <h3 class="title">Chính sách mua hàng</h3>
+                    <ul class="list-item"style="list-style-type: none">
+                        <li>
+                            <a href="" title="">Quy định - chính sách</a>
+                        </li>
+                        <li>
+                            <a href="" title="">Chính sách bảo hành - đổi trả</a>
+                        </li>
+                        <li>
+                            <a href="" title="">Chính sách hội viện</a>
+                        </li>
+                        <li>
+                            <a href="" title="">Giao hàng - lắp đặt</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="block" id="newfeed">
+                    <h3 class="title">Bảng tin</h3>
+                    <p class="desc">Đăng ký với chung tôi để nhận được thông tin ưu đãi sớm nhất</p>
+                    <div id="form-reg">
+                        <form method="POST" action="">
+                            <input type="email" name="email" id="email" placeholder="Nhập email tại đây">
+                            <button type="submit" id="sm-reg">Đăng ký</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="foot-bot">
+            <div class="wp-inner">
+                <p id="copyright">© Bản quyền thuộc về Nhatstore</p>
+            </div>
+        </div>
+    </div>
+    {{-- <footer class="footer spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6">
@@ -315,7 +415,7 @@
                 </div>
             </div>
         </div>
-    </footer>
+    </footer> --}}
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
@@ -326,52 +426,11 @@
     <script src="{{ asset('js/jquery.slicknav.js') }} "></script>
     <script src="{{ asset('js/mixitup.min.js') }} "></script>
     <script src="{{ asset('js/owl.carousel.min.js') }} "></script>
-    {{-- <script src="."></script> --}}
-    <script src="{{ asset('js/main.js') }} "></script>
+
     <script src="{{ asset('js/app.js') }} "></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-    <script>
-        var citis = document.getElementById("city");
-        var districts = document.getElementById("district");
-        var wards = document.getElementById("ward");
-        var Parameter = {
-            url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-            method: "GET",
-            responseType: "application/json",
-        };
-        var promise = axios(Parameter);
-        promise.then(function(result) {
-            renderCity(result.data);
-        });
-
-        function renderCity(data) {
-            for (const x of data) {
-                citis.options[citis.options.length] = new Option(x.Name, x.Id);
-            }
-            citis.onchange = function() {
-                district.length = 1;
-                ward.length = 1;
-                if (this.value != "") {
-                    const result = data.filter(n => n.Id === this.value);
-
-                    for (const k of result[0].Districts) {
-                        district.options[district.options.length] = new Option(k.Name, k.Id);
-                    }
-                }
-            };
-            district.onchange = function() {
-                ward.length = 1;
-                const dataCity = data.filter((n) => n.Id === citis.value);
-                if (this.value != "") {
-                    const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
-
-                    for (const w of dataWards) {
-                        wards.options[wards.options.length] = new Option(w.Name, w.Id);
-                    }
-                }
-            };
-        }
-    </script>
+    {{-- <script src="{{ asset('js/app.js') }} "></script> --}}
+    @yield('script')
     <script>
         $(document).ready(function() {
             $("#cat_laptop").on("click", "li", function() {
@@ -398,7 +457,7 @@
                         var newContent = "";
                         // var url =" {{ route('home') }}";
                         var ASSET_URL = '{{ env('APP_URL') }}';
-                        var DETAIL_URL ='{{ env('APP_URL')}}./product/detail/';
+                        var DETAIL_URL = '{{ env('APP_URL') }}./product/detail/';
                         //    console.log(DETAIL_URL)
                         // console.log(products.name);
                         // Lặp qua danh sách $products và tạo nội dung mới
@@ -470,7 +529,7 @@
                         var newContent = "";
                         // var url =" {{ route('home') }}";
                         var ASSET_URL = '{{ env('APP_URL') }}';
-                        var DETAIL_URL ='{{ env('APP_URL')}}./product/detail/';
+                        var DETAIL_URL = '{{ env('APP_URL') }}./product/detail/';
                         // console.log(products.name);
                         // Lặp qua danh sách $products và tạo nội dung mới
                         for (var i = 0; i < products.length; i++) {

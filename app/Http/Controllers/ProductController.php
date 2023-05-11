@@ -72,11 +72,21 @@ class ProductController extends Controller
     }
     function shoppingcart()
     {
-        return view('product.shoppingcart');
+        $user = "";
+        if (!empty(Auth::user()->name)) {
+
+            $user = Auth::user()->name;
+        }
+        return view('product.shoppingcart', compact('user'));
     }
     function checkout()
     {
-        return view('product.checkout');
+        $user = "";
+        if (!empty(Auth::user()->name)) {
+
+            $user = Auth::user()->name;
+        }
+        return view('product.checkout', compact('user'));
     }
     function buy_item(Request $request, $id)
     {
@@ -103,10 +113,15 @@ class ProductController extends Controller
         );
         $data['total_order'] = $sub_total;
         $request->session()->put('data', $data);
+        $user = "";
+        if (!empty(Auth::user()->name)) {
+
+            $user = Auth::user()->name;
+        }
         // $a= $request->session()->get('data');
         // return $a['id'];
         // return $data;
-        return view('product.checkout', compact('data'));
+        return view('product.checkout', compact('data','user'));
         // return redirect()->route('checkout', compact('data'));
     }
     function list($category)
@@ -127,13 +142,23 @@ class ProductController extends Controller
         $products = product::find($id);
         $cat_id=$products->cat_id;
         $product_same = product::where('cat_id', $cat_id)->limit(4)->get();
-        return view('product.detail', compact('products', 'product_same'));
+        $user = "";
+        if (!empty(Auth::user()->name)) {
+
+            $user = Auth::user()->name;
+        }
+        return view('product.detail', compact('products', 'product_same','user'));
     }
     function buy_all_cart()
     {
         $carts = Cart::content();
         // return $carts;   
-        return view('product.checkout', compact('carts'));
+        $user = "";
+        if (!empty(Auth::user()->name)) {
+
+            $user = Auth::user()->name;
+        }
+        return view('product.checkout', compact('carts','user'));
     }
     function add_cart($id)
     {
