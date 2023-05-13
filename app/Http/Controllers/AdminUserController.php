@@ -31,13 +31,16 @@ class AdminUserController extends Controller
             'delete'=>'xóa tạm thời'
         ];
         $status = $request->input('status');
-        if ($status == 'trash') {
+        if ($status == 'trash') {   
             $list_act=[
                 'restore'=>'Khôi phục',
                 'forceDelete'=>'Xóa vĩnh viễn'
             ];
             $users = User::onlyTrashed()->paginate(10);
-        } else {
+        } if($status == 'active'){
+            // $keyword = "";
+            $users = User::paginate(10);
+        }else {
             $keyword = "";
             if ($request->input('keyword')) {
                 $keyword = $request->input('keyword');

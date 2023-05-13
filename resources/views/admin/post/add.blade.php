@@ -17,24 +17,23 @@
                     </div>
                     <div class="form-group">
                         <label for="content">Nội dung bài viết</label>
-                         <textarea name="content" class="form-control" id="content" cols="30" rows="5"></textarea>
+                        <textarea name="content" class="form-control" id="content" cols="30" rows="5"></textarea>
                         @error('content')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
-
-
                     <div class="form-group">
                         <label for="category">Danh mục</label>
                         <select class="form-control" name="category" id="category">
-                            <option disabled style="font-weight: bold">Chính sách</option>
-                            @foreach ($cat_policy as $cat)
-                                <option>{{ $cat->catagory_item }}</option>
+                            <option value="">-----Chọn danh mục-----</option>
+                            @foreach ($cat_post as $key => $cat)
+                                <optgroup label={{$key}}>
+                                    @foreach ($cat as $v)
+                                        <option value="{{ $v->id }}">{{ $v->cat_item }}</option>
+                                    @endforeach
+                                </optgroup>
                             @endforeach
-                            <option disabled style="font-weight: bold">Tin tức</option>
-                            @foreach ($cat_new as $cat)
-                                <option>{{ $cat->catagory_item }}</option>
-                            @endforeach 
+
                         </select>
                         @error('category')
                             <small class="text-danger">{{ $message }}</small>

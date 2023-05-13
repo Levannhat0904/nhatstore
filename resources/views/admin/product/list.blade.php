@@ -110,7 +110,7 @@
                                      @endphp --}}
                                         </td>
                                         <td>{{ $product->price }}</td>
-                                        <td>{{ $product->productCat->catagory }}</td>
+                                        <td>{{ $product->productCat->cat_item }}</td>
                                         <td>{{ $product->created_at }}</td>
                                         @if ($product->total>0)
                                         <td><span class="badge badge-success">{{"Còn hàng"}}</span>  </td>
@@ -122,7 +122,7 @@
                                             <a href="{{ route('admin.edit_product', $product->id) }}" class="btn btn-success btn-sm rounded-0 text-white"
                                                 type="button" data-toggle="tooltip" data-placement="top" title="Edit"><i
                                                     class="fa fa-edit"></i></a>
-                                            <a href="{{ route('delete_product', $product->id) }}"
+                                            <a href="{{ route('admin.delete_product', $product->id) }}"
                                                 onclick="return confirm('Bạn có chắc chắn xóa sản phẩm này')"
                                                 class="btn btn-danger btn-sm rounded-0 text-white" type="button"
                                                 data-toggle="tooltip" data-placement="top" title="Delete"><i

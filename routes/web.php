@@ -50,12 +50,16 @@ Route::middleware(['auth', 'can:post.manager'])->group(function () {
 
 Route::middleware('can:post.manager')->group(function () {
     Route::get('/admin/post/action', [AdminPostController::class, 'action']);
+    Route::post('/admin/post/cat_parent/add', [AdminPostController::class, 'cat_parent']);
     Route::get('/admin/post/delete/{id}', [AdminPostController::class, 'delete'])->name('delete_post');
     Route::post('/admin/post/update/{id}', [AdminPostController::class, 'update'])->name('update_post');
     Route::get('/admin/post/edit/{id}', [AdminPostController::class, 'edit'])->name('edit_post');
-    Route::get('/admin/post/cat/edit/{id}', [AdminPostController::class, 'edit_cat'])->name('admin.edit_cat');
-    Route::post('/admin/post/cat/update/{id}', [AdminPostController::class, 'update_cat'])->name('admin.update_cat');
-    Route::get('/admin/post/cat/delete/{id}', [AdminPostController::class, 'delete_cat'])->name('admin.delete_cat');
+    Route::get('/admin/post/cat/edit_cat_item/{id}', [AdminPostController::class, 'edit_cat_item'])->name('admin.edit_cat_item_post');
+    Route::post('/admin/post/cat/update_cat_item/{id}', [AdminPostController::class, 'update_cat_item'])->name('admin.update_cat_item');
+    Route::get('/admin/post/cat/delete_cat_item/{id}', [AdminPostController::class, 'delete_cat_item'])->name('admin.delete_cat_item');
+    Route::get('/admin/post/cat/edit_cat/{id}', [AdminPostController::class, 'edit_cat'])->name('admin.edit_cat');
+    Route::post('/admin/post/cat/update_cat/{id}', [AdminPostController::class, 'update_cat'])->name('admin.update_cat');
+    Route::get('/admin/post/cat/delete_cat/{id}', [AdminPostController::class, 'delete_cat'])->name('admin.delete_cat');
     Route::get('/admin/post/add', [AdminPostController::class, 'add']);
     Route::get('/admin/post/cat', [AdminPostController::class, 'cat']);
     Route::post('/admin/post/store', [AdminPostController::class, 'store']);
@@ -74,9 +78,11 @@ Route::middleware('can:page.manager')->group(function () {
     Route::post('/admin/page/update/{id}', [AdminPageController::class, 'update'])->name('admin.update_page');
 });
 Route::middleware('can:product.manager')->group(function () {
+    Route::post('/admin/product/cat_parent/add', [AdminProductController::class, 'cat_parent'])->name('admin.product_add_cat_parent');
+    Route::post('/admin/product/cat/cat_add', [AdminProductController::class, 'cat_add'])->name('admin.product_cat_add');
     Route::get('admin/product/list', [AdminProductController::class, 'list']);
     Route::get('admin/product/add', [AdminProductController::class, 'add']);
-    Route::get('admin/product/cat/list', [AdminProductController::class, 'cat']);
+    Route::get('admin/product/cat/list', [AdminProductController::class, 'cat'])->name('admin.product.cat');
     Route::get('admin/product/color', [AdminProductController::class, 'color']);
     Route::post('admin/product/color/add', [AdminProductController::class, 'color_add']);
     Route::get('admin/product/color/edit/{id}', [AdminProductController::class, 'color_edit'])->name('admin.edit_color');
@@ -86,12 +92,15 @@ Route::middleware('can:product.manager')->group(function () {
     // Route::get('/admin/product/edit/{id}', [AdminProductController::class, 'edit_cat'])->name('admin.edit_cat_product');
     Route::get('/admin/product/cat_delete/{id}', [AdminProductController::class, 'delete_cat'])->name('admin.delete_cat_product');
     Route::post('/admin/product/cat/update/{id}', [AdminProductController::class, 'update_cat'])->name('admin.update_cat_product');
-    Route::get('/admin/product/delete/{id}', [AdminProductController::class, 'delete'])->name('delete_product');
+    Route::get('/admin/product/cat/edit_cat/{id}', [AdminProductController::class, 'edit_cat'])->name('admin.edit_cat_product');
+    Route::get('/admin/product/cat/edit_cat_item/{id}', [AdminProductController::class, 'edit_cat_item'])->name('admin.edit_cat_item_product');
+    Route::post('/admin/product/cat/update_cat_item/{id}', [AdminProductController::class, 'update_cat_item'])->name('admin.update_cat_item_product');
+    Route::get('/admin/product/cat/delete_cat_item/{id}', [AdminProductController::class, 'delete_cat_item'])->name('admin.delete_cat_item_product');
     Route::get('/admin/product/action', [AdminProductController::class, 'action']);
+    Route::get('/admin/product/delete/{id}', [AdminProductController::class, 'delete'])->name('admin.delete_product');
     Route::get('/admin/product/edit/{id}', [AdminProductController::class, 'edit_product'])->name('admin.edit_product');
     Route::post('/admin/product/update/{id}', [AdminProductController::class, 'update_product'])->name('admin.update_product');
 });
-
 
 Route::middleware('can:order.manager')->group(function () {
     Route::get('/admin/order/list', [AdminOrderController::class, 'list']);
@@ -112,12 +121,13 @@ Route::middleware('can:order.manager')->group(function () {
 
 
 Route::get('/home', [ProductController::class, 'show'])->name('home');
-Route::get('/product/detail/{id}', [ProductController::class, 'detail'])->name('product.detail');
-Route::middleware('auth')->group(function () {
+Route::get('/product/test', [ProductController::class, 'test']);
 
+Route::get('/product/detail/{id}', [ProductController::class, 'detail'])->name('product.detail');
+Route::get('/product/add_cart/{id}', [ProductController::class, 'add_cart'])->name('add_cart');
+Route::middleware('auth')->group(function () {
 Route::get('/product/checkout', [ProductController::class, 'checkout'])->name('checkout');
 Route::get('/product/sendmail', [ProductController::class, 'sendmail'])->name('sendmail');
-Route::get('/product/add_cart/{id}', [ProductController::class, 'add_cart'])->name('add_cart');
 Route::get('/product/buy/{id}', [ProductController::class, 'buy_item'])->name('buy_item');
 Route::get('/product/shoppingcart', [ProductController::class, 'shoppingcart'])->name("product.shoppingcart");
 Route::get('/product/buy_all_cart', [ProductController::class, 'buy_all_cart'])->name("product.buy_all_cart");

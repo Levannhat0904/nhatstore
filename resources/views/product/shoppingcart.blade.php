@@ -92,3 +92,6 @@
         </div>
     </section>
 @endsection
+@section('script')
+<script src="{{ asset('js/main.js') }}"></script>
+@endsection

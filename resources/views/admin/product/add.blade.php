@@ -34,7 +34,7 @@
                             <div class="form-group">
                                 <label for="file_upload">Ảnh chi tiết</label>
                                 <div></div>
-                                <input type="file" name="thumbnail[]"  multiple="multiple" id="file_upload">
+                                <input type="file" name="thumbnail[]" multiple="multiple" id="file_upload">
                             </div>
                             @error('thumbnail')
                                 <small class="text-danger">{{ $message }}</small>
@@ -84,15 +84,13 @@
                     <div class="form-group">
                         <label for="">Danh mục</label>
                         <select class="form-control" name="category" id="category">
-                            {{-- <option disabled style="font-weight: bold">Chính sách</option> --}}
-                            <option value="">-----Chọn-----</option>
-                            @foreach ($list_cat_product as $cat)
-                                <option value={{ $cat->id }}>{{ $cat->catagory_item }}</option>
+                            @foreach ($cat_product as $key => $cat)
+                                <optgroup label={{ $key }}>
+                                    @foreach ($cat as $v)
+                                        <option value="{{ $v->id }}">{{ $v->cat_item }}</option>
+                                    @endforeach
+                                </optgroup>
                             @endforeach
-                            {{-- <option disabled style="font-weight: bold">Tin tức</option>
-                            @foreach ($cat_new as $cat)
-                                <option>{{ $cat->catagory_item }}</option>
-                            @endforeach  --}}
                         </select>
                         @error('category')
                             <small class="text-danger">{{ $message }}</small>

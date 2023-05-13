@@ -23,9 +23,10 @@ return new class extends Migration
             $table->unsignedBigInteger('price');
             $table->unsignedBigInteger('user_id');  
             $table->unsignedBigInteger('cat_id');
+            $table->unsignedBigInteger('qty_sold');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('total');
-            $table->foreign('cat_id')->references('id')->on('product_cats')->onDelete('cascade');
+            $table->foreign('cat_id')->references('id')->on('cat_products')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\cat;
+use App\Models\cat_post;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use GuzzleHttp\Middleware;
-
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Str;
 use function PHPUnit\Framework\returnSelf;
 
 class AdminPostController extends Controller
@@ -24,6 +24,7 @@ class AdminPostController extends Controller
     //
     function store(Request $request)
     {
+
         $request->validate(
             [
                 'title' => 'required',
@@ -39,19 +40,19 @@ class AdminPostController extends Controller
                 'category' => 'Danh mục'
             ]
         );
-        $cat = $request->input('category');
-        $cat_id = cat::select('id')->where('catagory_item', "$cat")->get();
+        //   return $request->all();
+        $cat_id = $request->input('category');
         // return $cat_id[0]->id;// trả về id của danh mục con
         $post = array([
             'title' => $request->input('title'),
             'content' => $request->input('content'),
-            'cat_id' => $cat_id[0]->id,
+            'cat_id' => $cat_id,
             'user_id' =>  Auth::id()
         ]);
         Post::create([
             'title' => $request->input('title'),
             'content' => $request->input('content'),
-            'cat_id' => $cat_id[0]->id,
+            'cat_id' => $cat_id,
             'user_id' =>  Auth::id()
         ]);
         return redirect('admin/post/list')->with('status', 'Thêm bài viết thành công');
@@ -71,45 +72,48 @@ class AdminPostController extends Controller
     function edit($id)
     {
         $post = Post::find($id);
-        $cat_policy = cat::where('catagorys', 'Chính sách')->get();
-        $cat_new = cat::where('catagorys', 'Tin tức')->get();
-        //    return $cats;
-        // return view('admin.post.add', compact('cat_policy', 'cat_new'));
-        return view('admin.post.edit', compact('post', 'cat_policy', 'cat_new'));
+        
+        $cat_post = cat_post::with('cat')
+            ->get()
+            ->groupBy(function ($post) {
+                return Str::slug($post->cat->cat);
+            });
+        return view('admin.post.edit', compact('cat_post', 'post'));
+        // return view('admin.post.edit', compact('post', 'cat_policy', 'cat_new'));
     }
     function update(Request $request, $id)
     {
-        if ($request->input('btn_update')) {
-            // return $request->input();//goi ra tât cả bản gi và dc hiện trên url
-            $request->validate(
-                [
-                    'title' => 'required',
-                    'content' => 'required',
-
-                ],
-                [
-                    'required' => ":attribute không được để trống",
-                    'min' => ":attribute có độ dài ít nhất :min kí tự",
-                    'max' => ":attribute có độ dài tối đa :max kí tự",
-                    'confirmed' => ":attribute xác nhận mật khẩu không thành công",
-                ],
-                [
-                    'name' => 'Tên người dùng',
-                    'password' => 'Mật khẩu'
-                ]
-            );
-            $cat = $request->input('category');
-            $cat_id = cat::select('id')->where('catagory_item', "$cat")->get();
-            // return $cat_id[0]->id;// trả về id của danh mục con
-            // return "haha";
-            Post::where('id', $id)->update([
-                'title' => $request->input('title'),
-                'content' => $request->input('content'),
-                'cat_id' => $cat_id[0]->id,
-                'user_id' =>  Auth::id()
-            ]);
-            return redirect('admin/post/list')->with('status', 'đã cập nhật bài viết thành công');
-        }
+        $request->validate(
+            [
+                'title' => 'required',
+                'content' => 'required',
+                'category' => 'required'
+            ],
+            [
+                'required' => ':attribute không được để trống',
+            ],
+            [
+                'title' => 'Tiêu đề',
+                'content' => 'Nội dung',
+                'category' => 'Danh mục'
+            ]
+        );
+        //   return $request->all();
+        $cat_id = $request->input('category');
+        // return $cat_id[0]->id;// trả về id của danh mục con
+        $post = array([
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'cat_id' => $cat_id,
+            'user_id' =>  Auth::id()
+        ]);
+        Post::where('id', $id)->update([
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'cat_id' => $cat_id,
+            'user_id' =>  Auth::id()
+        ]);
+        return redirect('admin/post/list')->with('status', 'Thêm bài viết thành công');
     }
     function delete($id)
     {
@@ -130,6 +134,9 @@ class AdminPostController extends Controller
                 'forceDelete' => 'Xóa vĩnh viễn'
             ];
             $posts = Post::onlyTrashed()->paginate(10);
+        }
+        if($status == 'active'){
+            $posts = Post::paginate(10);
         } else {
 
             $keyword = "";
@@ -190,89 +197,119 @@ class AdminPostController extends Controller
     }
     function add()
     {
-        // $cats = cat::all();
-        $cat_policy = cat::where('catagorys', 'Chính sách')->get();
-        $cat_new = cat::where('catagorys', 'Tin tức')->get();
-        //    return $cats;
-        return view('admin.post.add', compact('cat_policy', 'cat_new'));
-
-        //lấy ra id user đang đăng nhập
-        // $user = Auth::user();
-        // $id = Auth::id();
-        // return $id;
+        $cat_post = cat_post::with('cat')
+            ->get()
+            ->groupBy('cat_id');
+        $cat_post = cat_post::with('cat')
+            ->get()
+            ->groupBy(function ($post) {
+                return Str::slug($post->cat->cat);
+            });
+        return view('admin.post.add', compact('cat_post'));
     }
 
     function cat()
     {
-        $cats = cat::select('catagorys')->distinct()->get();
-        // $cats= $cat->catagorys;
-        $cat_items = cat::all();
-        return view('admin.post.cat', compact('cats', 'cat_items'));
+        $cat_post = cat::all()->where(function ($cat) {
+            return explode('.', $cat->slug)[0] === 'post';
+        })->groupBy(function ($cat) {
+            return explode('.', $cat->slug)[0];
+        });
+        $cat_post_item = cat_post::orderBy('cat_id', 'asc')->get();
+        return view('admin.post.cat', compact('cat_post', 'cat_post_item'));
     }
     function cat_add(Request $request)
     {
-        if ($request->input('btn_add')) {
-            // return $request->input();//goi ra tât cả bản gi và dc hiện trên url
-            $request->validate(
-                [
-                    'parent' => 'required',
-                    'item' => 'required',
+        
+        $validatedData = $request->validate([
+            'cat_item' => ['required', 'unique:cat_posts', 'max:255'],
+            'cat_parent' => 'required',
+        ]);
+        // return $request->all();
 
-                ],
-                [
-                    'required' => ":attribute không được để trống",
-                ],
-                [
-                    'item' => 'Danh mục',
-                    'parent' => 'Danh mục cha'
-                ]
-            );
-
-            cat::create([
-                'catagorys' => $request->input('parent'),
-                'catagory_item' => $request->input('item')
-            ]);
-            return redirect('admin/post/cat')->with('status', 'Đã thêm danh mục thành công');
-        }
+        cat_post::create([
+            'cat_item' => $request->input('cat_item'),
+            'cat_id' => $request->input('cat_parent')
+        ]);
+        return redirect('admin/post/cat')->with('status', 'Đã thêm danh mục thành công');
     }
-    function edit_cat($id){
+    function cat_parent(Request $request)
+    {
+        $cat = $request->input('cat');
+        $slug = "post." . $cat;
+        // return $slug;
+        $validatedData = $request->validate([
+            'cat' => ['required', 'unique:cats', 'max:255'],
+
+        ]);
+        cat::create([
+            'cat' => $cat,
+            'slug' => $slug
+        ]);
+        return redirect('admin/post/cat')->with('status', 'Đã thêm danh mục thành công');
+    }
+    function edit_cat_item($id)
+    {
+        $cat_post_item = cat_post::all();
+        $cat_edit = cat_post::find($id);
+        $cat_post = cat::all()->where(function ($cat) {
+            return explode('.', $cat->slug)[0] === 'post';
+        })->groupBy(function ($cat) {
+            return explode('.', $cat->slug)[0];
+        });
+        return view('admin.post.edit_cat_item', compact('cat_post', 'cat_edit', 'cat_post_item'));
+    }
+    function update_cat_item(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'cat_item' => ['required', 'unique:cat_posts', 'max:255'],
+            'cat_parent' => 'required',
+        ]);
+
+        cat_post::where('id', $id)->update([
+            'cat_item' => $request->input('cat_item'),
+            'cat_id' => $request->input('cat_parent')
+
+        ]);
+        return redirect('admin/post/cat')->with('status', 'đã cập nhật danh mục thành công');
+    }
+
+    function delete_cat_item($id)
+    {
+        $cat_item_delete = cat_post::find($id);
+        $cat_item_delete->delete();
+        return redirect('admin/post/cat')->with('status', 'Đã xóa danh mục thành công');
+    }
+    function edit_cat($id)
+    {
 
         $cat_edit = cat::find($id);
-        $cats = cat::select('catagorys')->distinct()->get();
-        // $cats= $cat->catagorys;
-        $cat_items = cat::all();
-        return view('admin.post.edit_cart', compact('cats', 'cat_edit', 'cat_items'));
-        
+        $cat_post = cat::all()->where(function ($cat) {
+            return explode('.', $cat->slug)[0] === 'post';
+        })->groupBy(function ($cat) {
+            return explode('.', $cat->slug)[0];
+        });
+        return view('admin.post.edit_cat', compact('cat_post', 'cat_edit'));
     }
-    function update_cat(Request $request, $id){
-        if ($request->input('btn_add')) {
-            // return $request->input();//goi ra tât cả bản gi và dc hiện trên url
-            $request->validate(
-                [
-                    'parent' => 'required',
-                    'item' => 'required',
+    function update_cat(Request $request, $id)
+    {
+        $cat = $request->input('cat');
+        $slug = "post." . $cat;
+        // return $slug;
+        $validatedData = $request->validate([
+            'cat' => ['required', 'unique:cats', 'max:255'],
 
-                ],
-                [
-                    'required' => ":attribute không được để trống",
-                ],
-                [
-                    'item' => 'Danh mục',
-                    'parent' => 'Danh mục cha'
-                ]
-            );
-
-            cat::where('id', $id)->update([
-                'catagorys' => $request->input('parent'),
-                'catagory_item' => $request->input('item'),
-                
-            ]);
-            return redirect('admin/post/cat')->with('status', 'đã cập nhật danh mục thành công');
-        }
+        ]);
+        cat::where('id', $id)->update([
+            'cat' => $cat,
+            'slug' => $slug
+        ]);
+        return redirect('admin/post/cat')->with('status', 'Đã thêm danh mục thành công');
     }
-    function delete_cat($id){
-        $cat = cat::find($id);
-        $cat->delete();
+    function delete_cat($id)
+    {
+        $cat_item_delete = cat::find($id);
+        $cat_item_delete->delete();
         return redirect('admin/post/cat')->with('status', 'Đã xóa danh mục thành công');
     }
 }

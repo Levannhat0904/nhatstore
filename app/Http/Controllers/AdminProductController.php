@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Str;
 use App\Models\cat;
+use App\Models\CatProduct;
 use App\Models\colorProduct;
 use App\Models\product;
 use App\Models\productCat;
@@ -118,104 +119,95 @@ class AdminProductController extends Controller
     }
     function add(Request $request)
     {
-        $list_cat_product=productCat::orderBy('catagory')-> get();
+        
         $colorProducts = colorProduct::all();
-        
-        // echo "<pre>";
-        // echo $coloProducts;
-        // echo "</pre>";
-        //  $color= colorProduct::all();
-        // return $color;
-        
-        // return redirect('admin/product/cat/list')->with('status', 'Đã thêm danh mục thành công');
-        return view('admin.product.add', compact('colorProducts', 'list_cat_product'));
+        $cat_post = CatProduct::with('cat')
+            ->get()
+            ->groupBy('cat_id');
+        $cat_product = CatProduct::with('cat')
+            ->get()
+            ->groupBy(function ($post) {
+                return Str::slug($post->cat->cat);
+            });
+        return view('admin.product.add', compact('cat_product','colorProducts'));
+       
     }
     //
 
     function cat()
     {
-        $cats = cat::select('catagorys')->distinct()->get();
-        // $cats= $cat->catagorys;
-        $cat_items = productCat::all();
-        // $list_cat =array([
-        //     'Điện thoại',
-        //     'Laptop',
-        //     'Máy tính bảng'
-        // ]);
-        
-        echo "<pre>";
-        // print_r($list_cat);
-        echo "</pre>";
-        return view('admin.product.cat', compact('cats','cat_items'));
+        $cat_product = cat::all()->where(function ($cat) {
+            return explode('.', $cat->slug)[0] === 'product';
+        })->groupBy(function ($cat) {
+            return explode('.', $cat->slug)[0];
+        });
+        $cat_product_item = CatProduct::orderBy('cat_id', 'asc')->get();
+        return view('admin.product.cat', compact('cat_product', 'cat_product_item'));
+        // return view('admin.product.cat', compact('cats','cat_items'));
     }
     function cat_add(Request $request)
     {
-        if ($request->input('btn_add')) {
-            // return $request->input();//goi ra tât cả bản gi và dc hiện trên url
-            $request->validate(
-                [
-                    'parent' => 'required',
-                    'item' => 'required',
+        // return $request->all();
+        $validatedData = $request->validate([
+            'cat_item' => ['required', 'unique:cat_posts', 'max:255'],
+            'cat_parent' => 'required',
+        ]);
+        // return $request->all();
 
-                ],
-                [
-                    'required' => ":attribute không được để trống",
-                ],
-                [
-                    'item' => 'Danh mục',
-                    'parent' => 'Danh mục cha'
-                ]
-            );
-            // return $request->input('parent');
-           productCat ::create([
-                'catagory' => $request->input('parent'),
-                'catagory_item' => $request->input('item')
-            ]);
-            return redirect('admin/product/cat/list')->with('status', 'Đã thêm danh mục thành công');
-        }
+        CatProduct::create([
+            'cat_item' => $request->input('cat_item'),
+            'cat_id' => $request->input('cat_parent')
+        ]);
+        return redirect()->route('admin.product.cat')->with('status', 'Đã thêm danh mục thành công');
     }
-    // function edit_cat($id)
-    // {
+    function cat_parent(Request $request)
+    {
+        // return $request->all();
+        $cat = $request->input('cat');
+        $slug = "product." . $cat;
+        // return $slug;
+        $validatedData = $request->validate([
+            'cat' => ['required', 'unique:cats', 'max:255'],
 
-    //     $cat_edit = cat::find($id);
-    //     $cats = cat::select('catagorys')->distinct()->get();
-    //     // $cats= $cat->catagorys;
-    //     $cat_items = cat::all();
-        
-    //     return view('admin.post.edit_cart', compact('cats', 'cat_edit', 'cat_items'));
-    // }
-    // function update_cat(Request $request, $id)
-    // {
-    //     if ($request->input('btn_add')) {
-    //         // return $request->input();//goi ra tât cả bản gi và dc hiện trên url
-    //         $request->validate(
-    //             [
-    //                 'parent' => 'required',
-    //                 'item' => 'required',
+        ]);
+        cat::create([
+            'cat' => $cat,
+            'slug' => $slug
+        ]);
+        return redirect()->route('admin.product.cat')->with('status', 'Đã thêm danh mục thành công');
+    }
+    
+    function edit_cat($id)
+    {
 
-    //             ],
-    //             [
-    //                 'required' => ":attribute không được để trống",
-    //             ],
-    //             [
-    //                 'item' => 'Danh mục',
-    //                 'parent' => 'Danh mục cha'
-    //             ]
-    //         );
+        $cat_edit = cat::find($id);
+        $cat_post = cat::all()->where(function ($cat) {
+            return explode('.', $cat->slug)[0] === 'product';
+        })->groupBy(function ($cat) {
+            return explode('.', $cat->slug)[0];
+        });
+        return view('admin.pr.edit_cat', compact('cat_post', 'cat_edit'));
+    }
+    function update_cat(Request $request, $id)
+    {
+        $cat = $request->input('cat');
+        $slug = "product." . $cat;
+        // return $slug;
+        $validatedData = $request->validate([
+            'cat' => ['required', 'unique:cats', 'max:255'],
 
-    //         cat::where('id', $id)->update([
-    //             'catagory' => $request->input('parent'),
-    //             'catagory_item' => $request->input('item'),
-
-    //         ]);
-    //         return redirect('admin/product/cat/list')->with('status', 'đã cập nhật danh mục thành công');
-    //     }
-    // }
+        ]);
+        cat::where('id', $id)->update([
+            'cat' => $cat,
+            'slug' => $slug
+        ]);
+        return redirect()->route('admin.product.cat')->with('status', 'Đã thêm danh mục thành công');
+    }
     function delete_cat($id)
     {
-        $cat = productCat::find($id);
-        $cat->delete();
-        return redirect('admin/product/cat/list')->with('status', 'Đã xóa danh mục thành công');
+        $cat_item_delete = cat::find($id);
+        $cat_item_delete->delete();
+        return redirect()->route('admin.product.cat')->with('status', 'Đã xóa danh mục thành công');
     }
     function delete($id){
         $product= product::find($id);
@@ -224,10 +216,47 @@ class AdminProductController extends Controller
     }
 
     //
+    function edit_cat_item($id)
+    {
+        $cat_post_item = CatProduct::all();
+        $cat_edit = CatProduct::find($id);
+        $cat_product = cat::all()->where(function ($cat) {
+            return explode('.', $cat->slug)[0] === 'product';
+        })->groupBy(function ($cat) {
+            return explode('.', $cat->slug)[0];
+        });
+        return view('admin.product.edit_cat_item', compact('cat_product', 'cat_edit', 'cat_post_item'));
+    }
+    function update_cat_item(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'cat_item' => ['required', 'unique:cat_posts', 'max:255'],
+            'cat_parent' => 'required',
+        ]);
 
+        CatProduct::where('id', $id)->update([
+            'cat_item' => $request->input('cat_item'),
+            'cat_id' => $request->input('cat_parent')
+
+        ]);
+        return redirect()->route('admin.product.cat')->with('status', 'đã cập nhật danh mục thành công');
+    }
+
+    function delete_cat_item($id)
+    {
+        $cat_item_delete = CatProduct::find($id);
+        $cat_item_delete->delete();
+        return redirect()->route('admin.product.cat')->with('status', 'Đã xóa danh mục thành công');
+    }
 
     function store(Request $request)
     {
+        // return $request->input('category');//l
+        // return CatProduct::find($request->input('category'))->cat_item;//lấy dc tên hãng dth
+        // return CatProduct::find($request->input('category'))->cat->cat;//lấy danh mục
+        
+        
+        // return $request->all();
         // $input['color'] =json_encode($request->input('color'));
         // return json_decode( $input['color']);
         // return $request->input('color');
@@ -294,6 +323,7 @@ class AdminProductController extends Controller
             // print_r($thumbnail);
             echo "</pre>";
             // print_r($imgData);
+            $slug_cat=CatProduct::find($request->input('category'))->cat->cat.".".CatProduct::find($request->input('category'))->cat_item;
             product ::create([
                 'name' => $request->input('name'),
                 'img' =>$input['img'],
@@ -304,6 +334,7 @@ class AdminProductController extends Controller
                 'user_id'=>Auth::id(),
                 'cat_id'=>$request->input('category'),
                 'total'=>$request->input('total_product'),
+                'slug_cat'=>$slug_cat
             ]);
             return redirect('admin/product/list')->with('status', 'Đã thêm sản phẩm thành công');
         }   
@@ -358,6 +389,7 @@ class AdminProductController extends Controller
             ]
 
         );
+        $slug_cat=CatProduct::find($request->input('category'))->cat->cat.".".CatProduct::find($request->input('category'))->cat_item;
         $input = $request->all();
         $img=$request->file('img')->getClientOriginalName();
         $path = $request->file('img')->move('img_product', $img); 
@@ -403,6 +435,7 @@ class AdminProductController extends Controller
                 'user_id'=>Auth::id(),
                 'cat_id'=>$request->input('category'),
                 'total'=>$request->input('total_product'),
+                'slug_cat'=>$slug_cat
             ]);
             return redirect('admin/product/list')->with('status', 'Đã cập nhật sản phẩm thành công');
         }   

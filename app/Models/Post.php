@@ -17,6 +17,6 @@ class Post extends Model
     }
     function cat(){
         // return $this->hasOne('App\featureImage');
-        return $this->belongsTo(cat::class);//(1-n)
+        return $this->belongsTo(cat_post::class,'cat_id');//(1-n)
     }
 }

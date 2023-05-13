@@ -425,19 +425,95 @@
     <script src="{{ asset('js/jquery-ui.min.js') }} "></script>
     <script src="{{ asset('js/jquery.slicknav.js') }} "></script>
     <script src="{{ asset('js/mixitup.min.js') }} "></script>
-    <script src="{{ asset('js/owl.carousel.min.js') }} "></script>
-
+    <script src="{{ asset('js/owl.carousel.min.js') }} "></script>  
     <script src="{{ asset('js/app.js') }} "></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     {{-- <script src="{{ asset('js/app.js') }} "></script> --}}
     @yield('script')
     <script>
+        // $(document).ready(function() {
+        //     $("#cat_laptop").on("click", "li", function() {
+        //         var cat = $(this).html();
+        //         alert(cat);
+        //         var data = {
+        //             cat: cat
+        //         };
+        //         $.ajax({
+        //             url: "{{ route('product.show') }}",
+        //             // alert($(this).html());
+        //             method: "GET",
+        //             data: data,
+        //             dataType: "json",
+        //             // success: function(data) {
+        //             //    alert(data);
+        //             // console.log(data);
+        //             success: function(data) {
+        //                 // Xử lý dữ liệu nhận về từ server
+        //                 var products =
+        //                     data; // Giả sử dữ liệu $products được trả về dưới dạng JSON
+        //                 console.log(products.length)
+        //                 // Tạo biến để lưu nội dung mới
+        //                 var newContent = "";
+        //                 // var url =" {{ route('home') }}";
+        //                 var ASSET_URL = '{{ env('APP_URL') }}';
+        //                 var DETAIL_URL = '{{ env('APP_URL') }}./product/detail/';
+        //                 //    console.log(DETAIL_URL)
+        //                 // console.log(products.name);
+        //                 // Lặp qua danh sách $products và tạo nội dung mới
+        //                 for (var i = 0; i < products.length; i++) {
+        //                     newContent +=
+        //                         '<div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">' +
+        //                         '<div class="featured__item">' +
+        //                         '<div class="featured__item__pic set-bg"' +
+        //                         'style="background-image: url(\'' + ASSET_URL +
+        //                         products[i].img +
+        //                         '\')"' +
+        //                         'data-setbg="' +
+        //                         ASSET_URL +
+        //                         products[i].img +
+        //                         '">' +
+        //                         '<ul class="featured__item__pic__hover">' +
+
+        //                         '<li><a href="' +
+        //                         DETAIL_URL + products[i].id +
+        //                         '"><i class="fa fa-shopping-cart"></i></a></li>' +
+        //                         "</ul>" +
+        //                         "</div>" +
+        //                         '<div class="featured__item__text">' +
+        //                         '<h6><a href="#">' +
+        //                         products[i].name +
+        //                         "</a></h6>" +
+        //                         "<h5>" +
+        //                         products[i].price +
+        //                         " đ</h5>" +
+        //                         "</div>" +
+        //                         "</div>" +
+        //                         "</div>";
+
+        //                 }
+        //                 // console.log(newContent)
+
+        //                 // // Đưa nội dung mới vào container
+        //                 $("#product_laptop").html(newContent);
+        //                 // // }
+        //             },
+        //             error: function(xhr, status, error) {
+        //                 // console.error(xhr.responseText);
+        //             },
+        //         });
+        //     });
+        // });
         $(document).ready(function() {
-            $("#cat_laptop").on("click", "li", function() {
+            $(".cat_pro").on("click", "li", function() {
                 var cat = $(this).html();
+                var dataCatValue = $(this).data('cat');
+                var class_cat = "."+dataCatValue;
+                // alert(class_cat)
+                // alert(dataCatValue)
                 // alert(cat);
                 var data = {
-                    cat: cat
+                    cat: cat,
+                    dataCatValue:dataCatValue
                 };
                 $.ajax({
                     url: "{{ route('product.show') }}",
@@ -449,16 +525,15 @@
                     //    alert(data);
                     // console.log(data);
                     success: function(data) {
+                        console.log(data)
                         // Xử lý dữ liệu nhận về từ server
-                        var products =
-                            data; // Giả sử dữ liệu $products được trả về dưới dạng JSON
-                        console.log(products.length)
+                        var products =data; // Giả sử dữ liệu $products được trả về dưới dạng JSON
+                        // console.log(products.length)
                         // Tạo biến để lưu nội dung mới
                         var newContent = "";
                         // var url =" {{ route('home') }}";
                         var ASSET_URL = '{{ env('APP_URL') }}';
                         var DETAIL_URL = '{{ env('APP_URL') }}./product/detail/';
-                        //    console.log(DETAIL_URL)
                         // console.log(products.name);
                         // Lặp qua danh sách $products và tạo nội dung mới
                         for (var i = 0; i < products.length; i++) {
@@ -492,82 +567,11 @@
                                 "</div>";
 
                         }
-                        // console.log(newContent)
 
-                        // // Đưa nội dung mới vào container
-                        $("#product_laptop").html(newContent);
-                        // // }
-                    },
-                    error: function(xhr, status, error) {
-                        // console.error(xhr.responseText);
-                    },
-                });
-            });
-        });
-        $(document).ready(function() {
-            $("#cat").on("click", "li", function() {
-                var cat = $(this).html();
-                // alert(cat);
-                var data = {
-                    cat: cat
-                };
-                $.ajax({
-                    url: "{{ route('product.show') }}",
-                    // alert($(this).html());
-                    method: "GET",
-                    data: data,
-                    dataType: "json",
-                    // success: function(data) {
-                    //    alert(data);
-                    // console.log(data);
-                    success: function(data) {
-                        // Xử lý dữ liệu nhận về từ server
-                        var products =
-                            data; // Giả sử dữ liệu $products được trả về dưới dạng JSON
-                        console.log(products.length)
-                        // Tạo biến để lưu nội dung mới
-                        var newContent = "";
-                        // var url =" {{ route('home') }}";
-                        var ASSET_URL = '{{ env('APP_URL') }}';
-                        var DETAIL_URL = '{{ env('APP_URL') }}./product/detail/';
-                        // console.log(products.name);
-                        // Lặp qua danh sách $products và tạo nội dung mới
-                        for (var i = 0; i < products.length; i++) {
-                            newContent +=
-                                '<div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">' +
-                                '<div class="featured__item">' +
-                                '<div class="featured__item__pic set-bg"' +
-                                'style="background-image: url(\'' + ASSET_URL +
-                                products[i].img +
-                                '\')"' +
-                                'data-setbg="' +
-                                ASSET_URL +
-                                products[i].img +
-                                '">' +
-                                '<ul class="featured__item__pic__hover">' +
-
-                                '<li><a href="' +
-                                DETAIL_URL + products[i].id +
-                                '"><i class="fa fa-shopping-cart"></i></a></li>' +
-                                "</ul>" +
-                                "</div>" +
-                                '<div class="featured__item__text">' +
-                                '<h6><a href="#">' +
-                                products[i].name +
-                                "</a></h6>" +
-                                "<h5>" +
-                                products[i].price +
-                                " đ</h5>" +
-                                "</div>" +
-                                "</div>" +
-                                "</div>";
-
-                        }
-
-
-                        // // Đưa nội dung mới vào container
-                        $("#productContainer").html(newContent);
-                        // // }
+                            // var newContent=""
+                        // // // Đưa nội dung mới vào container
+                        $(class_cat).html(newContent);
+                        // }
                     },
                     error: function(xhr, status, error) {
                         // console.error(xhr.responseText);

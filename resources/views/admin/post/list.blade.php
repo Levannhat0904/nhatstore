@@ -23,7 +23,6 @@
                             class="text-muted">({{ $count[0] }})</span></a>
                     <a href="{{ request()->fullUrlWithQuery(['status' => 'trash']) }}" class="text-primary">Vô hiệu hóa<span
                             class="text-muted">({{ $count[1] }})</span></a>
-                    <a href="" class="text-primary">Trạng thái 3<span class="text-muted">(20)</span></a>
                 </div>
                 <form action="{{ url('admin/post/action') }}">
                     @csrf
@@ -49,8 +48,7 @@
                                     <th scope="col">Danh mục</th>
                                     <th scope="col">Ngày tạo</th>
                                     @if ((isset($_GET['status']) && $_GET['status'] != 'trash') || !isset($_GET['status']))
-
-                                    <th scope="col">Tác vụ</th>
+                                        <th scope="col">Tác vụ</th>
                                     @endif
                                 </tr>
                             </thead>
@@ -80,7 +78,7 @@
                                 @endphp --}}
                                         </td>
                                         <td><a href="">{{ $post->title }}</a></td>
-                                        <td>{{ $post->cat->catagory_item }}</td>
+                                        <td>{{ $post->cat->cat_item }}</td>
                                         <td>{{ $post->created_at }}</td>
                                         {{-- <td>
                                         <button class="btn btn-success btn-sm rounded-0" type="button"
@@ -91,22 +89,22 @@
                                             data-placement="top" title="Delete"><i class="fa fa-trash"></i>
                                         </button>
                                     </td> --}}
-                                    @if ((isset($_GET['status']) && $_GET['status'] != 'trash') || !isset($_GET['status']))
-                                        <td>
-                                            <a href="{{ route('edit_post', $post->id) }}"
-                                                class="btn btn-success btn-sm rounded-0 text-white" type="button"
-                                                data-toggle="tooltip" data-placement="top" title="Edit"><i
-                                                    class="fa fa-edit"></i></a>
-                                            {{-- @if (Auth::id() != $user->id) --}}
-                                            {{-- KIỂM TRA ĐỂ XUẤT HIỆN PHẦN XÓA BẢN GHI(USER) --}}
-                                            <a href="{{ route('delete_post', $post->id) }}"
-                                                onclick="return confirm('bạn có chăc chắn xóa bản ghi này')"
-                                                class="btn btn-danger btn-sm rounded-0 text-white" type="button"
-                                                data-toggle="tooltip" data-placement="top" title="Delete"><i
-                                                    class="fa fa-trash"></i></a>
-                                            {{-- @endif --}}
-                                        </td>
-                                    @endif
+                                        @if ((isset($_GET['status']) && $_GET['status'] != 'trash') || !isset($_GET['status']))
+                                            <td>
+                                                <a href="{{ route('edit_post', $post->id) }}"
+                                                    class="btn btn-success btn-sm rounded-0 text-white" type="button"
+                                                    data-toggle="tooltip" data-placement="top" title="Edit"><i
+                                                        class="fa fa-edit"></i></a>
+                                                {{-- @if (Auth::id() != $user->id) --}}
+                                                {{-- KIỂM TRA ĐỂ XUẤT HIỆN PHẦN XÓA BẢN GHI(USER) --}}
+                                                <a href="{{ route('delete_post', $post->id) }}"
+                                                    onclick="return confirm('bạn có chăc chắn xóa bản ghi này')"
+                                                    class="btn btn-danger btn-sm rounded-0 text-white" type="button"
+                                                    data-toggle="tooltip" data-placement="top" title="Delete"><i
+                                                        class="fa fa-trash"></i></a>
+                                                {{-- @endif --}}
+                                            </td>
+                                        @endif
                                 @endforeach
                             </tbody>
                         </table>

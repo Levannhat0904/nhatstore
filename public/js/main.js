@@ -58,6 +58,7 @@
     /*-----------------------
         Categories Slider
     ------------------------*/
+    
     $(".categories__slider").owlCarousel({
         loop: true,
         margin: 0,
@@ -70,22 +71,33 @@
         smartSpeed: 1200,
         autoHeight: false,
         autoplay: true,
+        responsiveClass:true,
         responsive: {
 
-            0: {
-                items: 2,
-            },
-
+            0:{
+                items:1,
+                nav:true
+            },  
             480: {
-                items: 3,
+                items: 2,
+                nav:true
             },
-
-            768: {
-                items: 4,
+            600:{
+                items:2,
+                nav:true
             },
-
-            992: {
-                items: 5,
+            768:{
+                items:3,
+                nav:true
+            },
+            992:{
+                items:4,
+                nav:true
+            },
+            1100:{
+                items:5,
+                nav:true,
+                loop:false
             }
         }
     });

@@ -10,14 +10,14 @@ class product extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = ['name', 'color','img', 'thumbnail', 'content', 'price', 'user_id', 'cat_id', 'total'];
+    protected $fillable = ['name', 'color','img', 'thumbnail', 'content', 'price', 'user_id', 'cat_id', 'total','slug_cat'];
     public function color()
     {
         return $this->belongstoMany(colorProduct::class);
     }
     public function productCat()
     {
-        return $this->belongsTo(productCat::class, "cat_id");
+        return $this->belongsTo(CatProduct::class, "cat_id");
     }
     public function order_detail()
     {

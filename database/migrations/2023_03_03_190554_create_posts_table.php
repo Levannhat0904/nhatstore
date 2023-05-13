@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('cat_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('cat_id')->references('id')->on('cats')->onDelete('cascade');
+            $table->foreign('cat_id')->references('id')->on('cat_posts')->onDelete('cascade');
             $table->timestamps();
         });
     }

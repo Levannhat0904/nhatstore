@@ -6,7 +6,9 @@ session_start();
 
 use App\Mail\order_all;
 use App\Mail\Send_mail;
+use App\Models\CatProduct;
 use App\Models\City;
+use Illuminate\Support\Str;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\product;
@@ -28,31 +30,10 @@ class ProductController extends Controller
     //
     function show()
     {
-
-        $cat_smartphone = productCat::where('catagory', '=', 'Điện thoại')->get();
-        $cat_laptop = productCat::where('catagory', '=', 'Laptop')->get();
-
-        // // // return $products[0]->content;
-        // // return view('product.show', compact('products'));
-        // $cat = productCat::where('catagory_item', $category)->firstOrFail();
-        // $cat_id= $cat->id;
-        // // return $cat_id  ;
-
-        // $cat_id= productCat::where('catagory', 'Điện thoại')->select('id')->get();
-
-        $products_smartphone = DB::table('product_cats')
-            ->join('products', function ($join) {
-                $join->on('products.cat_id', '=', 'product_cats.id')
-                    ->where('product_cats.catagory', '=', 'Điện thoại');
-            })
-            ->inRandomOrder()->get();
-        $products_laptop = DB::table('product_cats')
-            ->join('products', function ($join) {
-                $join->on('products.cat_id', '=', 'product_cats.id')
-                    ->where('product_cats.catagory', '=', 'Laptop');
-            })
-
-            ->get();
+        
+        $products = product::all()->groupBy(function ($product) {
+            return explode('.', $product->slug_cat)[0];
+        });
         $product_hots = product::orderBy('qty_sold', 'desc')->limit(10)->get();
         // return $product_hots;
         // return $products;
@@ -61,9 +42,7 @@ class ProductController extends Controller
 
             $user = Auth::user()->name;
         }
-
-
-        return view('product.show', compact('products_smartphone', 'products_laptop', 'cat_smartphone', 'cat_laptop', 'product_hots', 'user'));
+        return view('product.show', compact( 'products','product_hots', 'user'));
 
         // $products = Product::where('cat_id', $cat_id)->get();
         // // $products = Product::where('cat_id', $cat)->get();
@@ -124,16 +103,26 @@ class ProductController extends Controller
         return view('product.checkout', compact('data','user'));
         // return redirect()->route('checkout', compact('data'));
     }
-    function list($category)
+    function test(){
+        $cat="iPhone";
+        $model = CatProduct::where('cat_item',"=",$cat)->first();
+        // $model = CatProduct::all();
+        return $model->id;
+    }
+    function list($category)//route product.show->xử lí ajax
     {
         $cat = $_GET['cat'];
-        $cat = productCat::where('catagory_item', $cat)->first();
-        $cat = $cat->id;
+        // return $cat;
+        // $model = CatProduct::where('cat_item',$cat);
+        // return $model->id;
+        $cat_id = CatProduct::where('cat_item',"=",$cat)->first()->id;
+        // // $cat = $cats->id;
+        // return $cat_id;
         if (empty($cat)) {
             $products = Product::where('cat_id', "")->get();
             echo json_encode($products);
         } else {
-            $products = Product::where('cat_id', $cat)->get();
+            $products = Product::where('cat_id', $cat_id)->get();
             echo json_encode($products);
         }
     }
