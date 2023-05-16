@@ -385,7 +385,7 @@ class ProductController extends Controller
             $user = Auth::user()->name;
         }
         
-        $product_cats = cat::where('slug', 'LIKE', 'product.%')->get();   //lấy danh mục cha
+        $product_cats = cat::where('slug', 'LIKE', 'product.%')->get();   //lấy danh mục ch
         // return $product;
         return view('product.smartphone', compact('product_cat_perent', 'product_cat_item', 'product_cats', 'user','product_all_cat'));
     }
