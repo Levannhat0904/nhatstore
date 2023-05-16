@@ -97,7 +97,7 @@
             1100:{
                 items:5,
                 nav:true,
-                loop:false
+                loop:true
             }
         }
     });

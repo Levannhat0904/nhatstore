@@ -23,9 +23,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 // Route::controller(AdminUserController::class)->middleware('auth','CheckRole:subcriber')->group(function () {
@@ -37,7 +37,7 @@ Auth::routes();
 Route::get('/dashbroad', [DashboardController::class, 'show'])->middleware('auth');
 Route::middleware(['auth', 'can:post.manager'])->group(function () {
     //
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/admin/user/list', [AdminUserController::class, 'list']);
     Route::get('/admin/user/delete/{id}', [AdminUserController::class, 'delete'])->name('delete_user');
     Route::get('/admin/user/add', [AdminUserController::class, 'add']);
@@ -120,11 +120,13 @@ Route::middleware('can:order.manager')->group(function () {
 
 
 
-Route::get('/home', [ProductController::class, 'show'])->name('home');
+Route::get('/', [ProductController::class, 'show'])->name('home');
 Route::get('/product/test', [ProductController::class, 'test']);
 
 Route::get('/product/detail/{id}', [ProductController::class, 'detail'])->name('product.detail');
 Route::get('/product/add_cart/{id}', [ProductController::class, 'add_cart'])->name('add_cart');
+Route::get('/product/device/{cat}', [ProductController::class, 'device'])->name('product.device');
+
 Route::middleware('auth')->group(function () {
 Route::get('/product/checkout', [ProductController::class, 'checkout'])->name('checkout');
 Route::get('/product/sendmail', [ProductController::class, 'sendmail'])->name('sendmail');

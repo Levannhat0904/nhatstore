@@ -6,6 +6,7 @@ session_start();
 
 use App\Mail\order_all;
 use App\Mail\Send_mail;
+use App\Models\cat;
 use App\Models\CatProduct;
 use App\Models\City;
 use Illuminate\Support\Str;
@@ -28,12 +29,28 @@ use function PHPUnit\Framework\returnSelf;
 class ProductController extends Controller
 {
     //
-    function show()
+    function show(Request $request)
     {
-        
-        $products = product::all()->groupBy(function ($product) {
-            return explode('.', $product->slug_cat)[0];
-        });
+        // $cat_product = CatProduct::with('cat')
+        //     ->get()
+        //     ->groupBy(function ($product) {
+        //         return Str::slug($product->cat->cat);
+        //     });
+        $product_cats = cat::where('slug','LIKE','product.%')->get();   
+        // return $product_cats[0]->cat_product;
+        $keyword = $request->input('keyword');
+        if (!empty($keyword)) {
+            $products = product::where('name', 'like', '%' . $keyword . '%')
+                   ->get()
+                   ->groupBy(function ($product) {
+                        return explode('.', $product->slug_cat)[0];
+                   });
+        }else{
+            $products = product::all()->groupBy(function ($product) {
+                return explode('.', $product->slug_cat)[0];
+            });
+        }
+        // $users= User::all();// lấy ra toàn bộ user có trong hệ thống
         $product_hots = product::orderBy('qty_sold', 'desc')->limit(10)->get();
         // return $product_hots;
         // return $products;
@@ -42,7 +59,7 @@ class ProductController extends Controller
 
             $user = Auth::user()->name;
         }
-        return view('product.show', compact( 'products','product_hots', 'user'));
+        return view('product.show', compact( 'products','product_hots', 'user','product_cats'));
 
         // $products = Product::where('cat_id', $cat_id)->get();
         // // $products = Product::where('cat_id', $cat)->get();
@@ -333,6 +350,23 @@ class ProductController extends Controller
                 echo json_encode($data);
             }
         }
+    }
+    function device($cat){
+        $cat_perent = cat::all();
+        foreach($cat_perent as $v){
+            if( str::slug($v->cat) == $cat){
+                $id_cat= $v->id;
+            }
+        }
+        $product_cat=CatProduct::where('cat_item',$cat)->first();
+        // return $cat_item->product;
+        if(isset($id_cat)){
+            // return $id_cat;
+            $product_cat =CatProduct::where('cat_id',$id_cat)->get();
+            
+        }
+        // $product_cats = cat::where('slug','LIKE','product.%')->get(); 
+        return view('product.smartphone',compact('product_cat',));
     }
     
 }

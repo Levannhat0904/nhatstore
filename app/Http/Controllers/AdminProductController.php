@@ -121,9 +121,9 @@ class AdminProductController extends Controller
     {
         
         $colorProducts = colorProduct::all();
-        $cat_post = CatProduct::with('cat')
-            ->get()
-            ->groupBy('cat_id');
+        // $cat_post = CatProduct::with('cat')
+        //     ->get()
+        //     ->groupBy('cat_id');
         $cat_product = CatProduct::with('cat')
             ->get()
             ->groupBy(function ($post) {
@@ -347,19 +347,19 @@ class AdminProductController extends Controller
         // print_r($request->input('product_color'));
     }
     function edit_product($id){
-        $product=product::find($id);
-        $list_cat_product=productCat::orderBy('catagory')-> get();
+        // return $id;
         $colorProducts = colorProduct::all();
+        $product=product::find($id);
+        $cat_product = CatProduct::with('cat')
+            ->get()
+            ->groupBy(function ($post) {
+                return Str::slug($post->cat->cat);
+            });
         // return $product;
-        return view('admin.product.edit', compact('product', 'colorProducts','list_cat_product'));
+        return view('admin.product.edit', compact('product', 'cat_product', 'colorProducts'));
     }
     function update_product(Request $request, $id)
     {
-        // return $id;
-        // $input['color'] =json_encode($request->input('color'));
-        // return json_decode( $input['color']);
-        // return $request->input('color');
-        // return $request->input('total_product');  
         $request->validate(
             [
                 'name'=>'required',
@@ -391,35 +391,21 @@ class AdminProductController extends Controller
         );
         $slug_cat=CatProduct::find($request->input('category'))->cat->cat.".".CatProduct::find($request->input('category'))->cat_item;
         $input = $request->all();
-        $img=$request->file('img')->getClientOriginalName();
-        $path = $request->file('img')->move('img_product', $img); 
-        $img_product="img_product/".$img;
+        if ($request->hasFile('img')){
+            $img=$request->file('img')->getClientOriginalName();
+            $path = $request->file('img')->move('img_product', $img); 
+            $img_product="img_product/".$img;
+            $input['img'] = $img_product;
+        }
         
-        $input['img'] = $img_product;
-        
-        // return $input;
         if ($request->hasFile('thumbnail')) {
-            // return "haha";
-            // https://mtviet.com/blog/multiple-image-upload-in-laravel-8-example/
-            // echo "hahah";
             foreach ($request->file('thumbnail') as $file) {
                 $name = $file->getClientOriginalName();
                 $path = $file->move('thumbnail_product', $name);
                 $thumbnail[] = 'thumbnail_product/' . $name;
             }
-            // print_r($thumbnail);
-            // return $thumbnail;
-            // return $input;
             $input['thumbnail'] =json_encode($thumbnail);
             $input['color'] =json_encode($request->input('color'));
-            // return $input['color'];
-            // return $thumbnail ;
-            // return $input['thumbnail'] ;
-            // return $input['thumbnail'];
-            // return $input['color_id'];
-            // return $input;
-            // echo $input['thumbnail'];
-            // <img src="$input['thumbnail']" alt="">
             echo "<pre>";
             print_r($input['thumbnail']);
             // print_r($thumbnail);

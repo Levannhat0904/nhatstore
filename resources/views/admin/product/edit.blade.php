@@ -12,21 +12,24 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="name">Tên sản phẩm</label>
-                                <input class="form-control" type="text" name="name" value="{{$product->name}}" id="name">
+                                <input class="form-control" type="text" name="name" value="{{ $product->name }}"
+                                    id="name">
                                 @error('name')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label for="name">Giá</label>
-                                <input class="form-control" type="text" value="{{$product->price}}" name="price" id="name">
+                                <input class="form-control" type="text" value="{{ $product->price }}" name="price"
+                                    id="name">
                                 @error('price')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="total_product">Số lượng</label>
-                                <input class="form-control" type="number" value="{{$product->total}}" name="total_product" id="total_product">
+                                <input class="form-control" type="number" value="{{ $product->total }}"
+                                    name="total_product" id="total_product">
                                 @error('total_product')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -55,9 +58,16 @@
 
                                     <label for="intro">Màu sắc</label>
                                 </div>
+
                                 @foreach ($colorProducts as $color)
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="color[]"
+                                            @php
+                                                $color_product =json_decode($product->color); 
+                                                if(in_array($color->color_name,$color_product)){
+                                                    echo 'checked="checked"';
+                                                }
+                                            @endphp
                                             value="{{ $color->color_name }}">
                                         <label class="form-check-label"
                                             for="inlineCheckbox1">{{ $color->color_name }}</label>
@@ -66,15 +76,15 @@
                                 {{-- <textarea name="" class="form-control" id="intro" cols="30" rows="5"></textarea> --}}
                             </div>
                             @error('color')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
                     </div>
 
 
                     <div class="form-group">
                         <label for="intro">Chi tiết sản phẩm</label>
-                        <textarea name="content" class="form-control" id="intro" cols="30" rows="5">{{$product->content}}</textarea>
+                        <textarea name="content" class="form-control" id="intro" cols="30" rows="5">{{ $product->content }}</textarea>
                         @error('content')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
@@ -84,41 +94,23 @@
                     <div class="form-group">
                         <label for="">Danh mục</label>
                         <select class="form-control" name="category" id="category">
-                            {{-- <option disabled style="font-weight: bold">Chính sách</option> --}}
-                            <option value="">-----Chọn-----</option>
-                            @foreach ($list_cat_product as $cat)
-                                <option value={{ $cat->id }}>{{ $cat->catagory_item }}</option>
+                            @foreach ($cat_product as $key => $cat)
+                                <optgroup label={{ $key }}>
+                                    @foreach ($cat as $v)
+                                        <option
+                                            @php
+if($product->cat_id==$v->id)
+                                            echo ' selected="selected"'; @endphp
+                                            value="{{ $v->id }}">{{ $v->cat_item }}</option>
+                                    @endforeach
+                                </optgroup>
                             @endforeach
-                            {{-- <option disabled style="font-weight: bold">Tin tức</option>
-                            @foreach ($cat_new as $cat)
-                                <option>{{ $cat->catagory_item }}</option>
-                            @endforeach  --}}
                         </select>
                         @error('category')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
-                    {{-- <div class="form-group">
-                        <label for="">Trạng thái</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                                value="option1" checked>
-                            <label class="form-check-label" for="exampleRadios1">
-                                Chờ duyệt
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                                value="option2">
-                            <label class="form-check-label" for="exampleRadios2">
-                                Công khai
-                            </label>
-                        </div>
-                    </div> --}}
-
-
-
-                    <button type="submit" class="btn btn-primary">Thêm mới</button>
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
                 </form>
             </div>
         </div>

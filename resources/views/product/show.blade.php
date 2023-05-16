@@ -1,4 +1,7 @@
 @extends('layouts.client')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+    integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous">
+</script>
 @section('navbar')
     <section class="hero hero-normal">
         <div class="container">
@@ -9,19 +12,44 @@
                             <i class="fa fa-bars"></i>
                             <span>Danh mục sản phẩm</span>
                         </div>
+
                         <ul>
-                            <li><a href="#">Điện thoại</a></li>
-                            <li><a href="#">Laptop</a></li>
-                            <li><a href="#">Máy tính bảng</a></li>
-                            {{-- <li><a href="#">Fruit & Nut Gifts</a></li>
-                        <li><a href="#">Fresh Berries</a></li>
-                        <li><a href="#">Ocean Foods</a></li> 
-                        <li><a href="#">Butter & Eggs</a></li>
-                        <li><a href="#">Fastfood</a></li>
-                        <li><a href="#">Fresh Onion</a></li>
-                        <li><a href="#">Papayaya & Crisps</a></li>
-                        <li><a href="#">Oatmeal</a></li>
-                        <li><a href="#">Fresh Bananas</a></li> --}}
+                            <style>
+                                .hiddenn {
+                                    display: none;
+                                }
+
+                                .hiddenn.active {
+                                    display: block;
+                                }
+                            </style>
+
+                            <div style="font-size: 1.6rem">
+                                @foreach ($product_cats as $index => $product_cat)
+                                    <div>
+                                        <a href="{{ route('product.device',Str::slug($product_cat->cat)) }}"><span
+                                                data-target="hiddenn{{ $index }}">{{ $product_cat->cat }}</span></a>
+                                        <span style="margin: 10px" class="shows"><i
+                                                class="fa-solid fa-caret-down fa-beat"></i></span>
+                                        <div class="hiddenn" id="hiddenn{{ $index }}">
+                                            @foreach ($product_cat->cat_product as $cat)
+                                                <div style="margin: 20px">
+                                                    <a href="{{ route('product.device',Str::slug($cat->cat_item)) }}">{{ $cat->cat_item }}</a>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                            </div>
+                            <script>
+                                $(document).ready(function() {
+                                    $('.shows').click(function() {
+                                        var target = $(this).prev().find('span').data('target');
+                                        $('#' + target).toggle();
+                                    });
+                                });
+                            </script>
                         </ul>
                     </div>
                 </div>
@@ -30,8 +58,9 @@
                         <div class="hero__search__form">
                             <form action="#">
                                 {{--  --}}
-                                <input type="text" placeholder="Bạn cần tìm gì?">
-                                <button type="submit" class="site-btn">SEARCH</button>
+                                <input type="text" name="keyword" value="{{ request()->input('keyword') }}"
+                                    placeholder="Bạn cần tìm gì?">
+                                <button type="submit" name="btn-search" value="Tìm kiếm" class="site-btn">SEARCH</button>
                             </form>
                         </div>
                         <div class="hero__search__phone">
@@ -52,9 +81,9 @@
 @section('content')
     <section class="categories">
         <div class="container">
-            {{-- <div class="section-title"><img style="width: 500px; height: 90px; " src="{{ asset('img/tophot.png') }}"
+            <div class="section-title"><img style="width: 500px; height: 90px; " src="{{ asset('img/tophot.png') }}"
                     alt="title" loading="lazy">
-            </div> --}}
+            </div>
             <div class="row">
                 <div class="categories__slider owl-carousel">
                     @foreach ($product_hots as $p)
@@ -95,7 +124,7 @@
                                     @endphp
                                 @endforeach
                                 @foreach (array_unique($slug) as $v)
-                                    <li data-cat="catagory_{{ Str::slug($key,'_'); }}">{{ $v }}</li>
+                                    <li data-cat="catagory_{{ Str::slug($key, '_') }}">{{ $v }}</li>
                                 @endforeach
                                 @php
                                     $slug = null;
@@ -108,7 +137,7 @@
                         <script></script>
 
                         <div id="product-list">
-                            <div class="row featured__filter catagory_{{ Str::slug($key,'_'); }}" id="productContainer">
+                            <div class="row featured__filter catagory_{{ Str::slug($key, '_') }}" id="productContainer">
                                 @foreach ($productx as $product)
                                     <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
                                         <div class="featured__item">

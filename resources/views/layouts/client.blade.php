@@ -11,19 +11,22 @@
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
-
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!-- Css Styles -->
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> --}}
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }} " type="text/css">
-    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }} " type="text/css">
+    {{-- <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }} " type="text/css"> --}}
     <link rel="stylesheet" href="{{ asset('css/elegant-icons.css') }} " type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ asset('css/nice-select.css') }} " type="text/css">
     <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }} " type="text/css">
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }} " type="text/css">
     <link rel="stylesheet" href="{{ asset('css/slicknav.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css">
+    {{-- <link rel="stylesheet" href="{{ asset('css/style.css') }}"> --}}
     @yield('style')
 </head>
 
@@ -67,8 +70,7 @@
             @if (!empty($user))
         <div class="dropdown">
             {{-- <button class="dropbtn">Dropdown</button> --}}
-            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
+            <button type="button" class="btn dropdown-toggle">
                 <div class="header__top__right__auth">
                     <a href="#">
                         <i class="fa fa-user"></i>
@@ -125,7 +127,7 @@
         </nav>
         <div id="mobile-menu-wrap"></div>
         <div class="header__top__right__social">
-            <a href="https://www.facebook.com/lenhat.lhn"><i class="fa fa-facebook"></i></a>
+            <a href="https://www.facebook.com/lenhat.lhn"><i class="fa-brands fa-facebook"></i></a>
             <a href="#"><i class="fa fa-twitter"></i></a>
             <a href="#"><i class="fa fa-linkedin"></i></a>
             <a href="#"><i class="fa fa-pinterest-p"></i></a>
@@ -155,8 +157,8 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__right">
                             <div class="header__top__right__social">
-                                <a href="https://www.facebook.com/lenhat.lhn"><i class="fa fa-facebook"></i></a>
-                                <a href="http://www.instagram.com/le_vannhat__t"><i class="fa fa-instagram"></i></a>
+                                <a href="https://www.facebook.com/lenhat.lhn"><i class="fa-brands fa-facebook"></i></a>
+                                <a href="http://www.instagram.com/le_vannhat__t"><i class="fa-brands fa-square-instagram"></i></a>
                                 {{-- <a href="#"><i class="fa-brands fa-tiktok" ></i></a>
                                 <a href="#"><i class="fa fa-pinterest-p"></i></a> --}}
                             </div>
@@ -175,8 +177,7 @@
                             @if (!empty($user))
                                 <div class="dropdown">
                                     {{-- <button class="dropbtn">Dropdown</button> --}}
-                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" class="btn dropdown-toggle">
                                         <div class="header__top__right__auth">
                                             <a href="#"><i class="fa fa-user"></i>{{ $user }}</a>
                                         </div>
@@ -429,6 +430,7 @@
     <script src="{{ asset('js/app.js') }} "></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     {{-- <script src="{{ asset('js/app.js') }} "></script> --}}
+    
     @yield('script')
     <script>
         // $(document).ready(function() {
