@@ -164,7 +164,7 @@
                             </div>
                             <div class="header__top__right__language">
                                 <img style="width: 30px"
-                                    src="{{ asset('img/Flag_of_North_Vietnam_(1955–1976).jpg') }} " alt="">
+                                    src="{{ asset('img/vn.jpg') }} " alt="">
                                 <div>Việt Nam</div>
                                 {{-- <span class="arrow_carrot-down"></span>
                                 <ul>
@@ -279,144 +279,89 @@
     <!-- Blog Section End -->
 
     <!-- Footer Section Begin -->
-    <div id="footer-wp" style="box-sizing: border-box;font-size: 1.6rem;background-color: aliceblue">
-        <div id="foot-body">
-            <div class="wp-inner clearfix">
-                <div class="block" id="info-company">
-                    <h3 class="title">ISMART</h3>
-                    <p class="desc">ISMART luôn cung cấp luôn là sản phẩm chính hãng có thông tin rõ ràng, chính sách
-                        ưu đãi cực lớn cho khách hàng có thẻ thành viên.</p>
-                    <div id="payment">
-                        <div class="thumb">
-                            <img src="public/images/img-foot.png" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="block menu-ft" id="info-shop">
-                    <h3 class="title">Thông tin cửa hàng</h3>
-                    <ul class="list-item">
-                        <li>
-                            <p>106 - Trần Bình - Cầu Giấy - Hà Nội</p>
-                        </li>
-                        <li>
-                            <p>0987.654.321 - 0989.989.989</p>
-                        </li>
-                        <li>
-                            <p>vshop@gmail.com</p>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="block menu-ft policy" id="info-shop">
-                    <h3 class="title">Chính sách mua hàng</h3>
-                    <ul class="list-item"style="list-style-type: none">
-                        <li>
-                            <a href="" title="">Quy định - chính sách</a>
-                        </li>
-                        <li>
-                            <a href="" title="">Chính sách bảo hành - đổi trả</a>
-                        </li>
-                        <li>
-                            <a href="" title="">Chính sách hội viện</a>
-                        </li>
-                        <li>
-                            <a href="" title="">Giao hàng - lắp đặt</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="block" id="newfeed">
-                    <h3 class="title">Bảng tin</h3>
-                    <p class="desc">Đăng ký với chung tôi để nhận được thông tin ưu đãi sớm nhất</p>
-                    <div id="form-reg">
-                        <form method="POST" action="">
-                            <input type="email" name="email" id="email" placeholder="Nhập email tại đây">
-                            <button type="submit" id="sm-reg">Đăng ký</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+    <!-- Footer -->
+<footer class=" text-lg-start bg-white text-muted">
+    <!-- Section: Social media -->
+   
+  
+    <!-- Section: Links  -->
+    <section style="background-color: gainsboro" class="">
+      <div class="container text-md-start mt-5">
+        <!-- Grid row -->
+        <div class="row mt-3">
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+            <!-- Content -->
+            <h6 class="text-uppercase fw-bold mb-4">
+              <i class="fas fa-gem me-3 text-secondary"></i>Nhatstore
+            </h6>
+            <p>
+                Nhatstore luôn cung cấp luôn là sản phẩm chính hãng có thông tin rõ ràng, chính sách ưu đãi cực lớn cho khách hàng có thẻ thành viên.
+            </p>
+          </div>
+          <!-- Grid column -->
+  
+          <!-- Grid column -->
+          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold mb-4">
+                Thông tin cửa hàng
+            </h6>
+            <style>
+                .text-reset{
+                    font-size: 1.6rem;
+                }
+            </style>
+            <ul>
+                <li class="text-reset">106 - Trần Bình - Cầu Giấy - Hà Nội</li>
+                <li class="text-reset">0987.654.321 - 0989.989.989</li>
+                <li class="text-reset">vshop@gmail.com</li>
+            </ul>
+          </div>
+          <!-- Grid column -->
+  
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold mb-4">
+                Chính sách mua hàng
+            </h6>
+            <ul>
+                <li class="text-reset">Quy định - chính sách</li>
+                <li class="text-reset">Chính sách bảo hành - đổi trả</li>
+                <li class="text-reset">Giao hàng - lắp đặt</li>
+            </ul>
+          </div>
+          <!-- Grid column -->
+  
+          <!-- Grid column -->
+          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold mb-4">Liên Hệ</h6>
+            <p><i class="fas fa-home me-3 text-secondary"></i> 70Phùng Hưng - Hà Đông - Hà Nội</p>
+            <p>
+              <i class="fas fa-envelope me-3 text-secondary"></i>
+              hiamnhatdz203@gmail.com
+            </p>
+            <p><i class="fas fa-phone me-3 text-secondary"></i> 0965 203 734</p>
+            <p><i class="fas fa-phone me-3 text-secondary"></i> 0559 886 909</p>
+          </div>
+          <!-- Grid column -->
         </div>
-        <div id="foot-bot">
-            <div class="wp-inner">
-                <p id="copyright">© Bản quyền thuộc về Nhatstore</p>
-            </div>
-        </div>
+        <!-- Grid row -->
+      </div>
+    </section>
+    <!-- Section: Links  -->
+  
+    <!-- Copyright -->
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
+      © 2023 Copyright:
+      <a class="text-reset fw-bold" href="https://mdbootstrap.com/">Nhatstore</a>
     </div>
-    {{-- <footer class="footer spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="footer__about">
-                        <div class="footer__about__logo">
-                            <a href="./index.html"><img src="{{ asset('img/logonhat.png') }}" alt=""></a>
-                        </div>
-                        <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hiamnhatdz203@gmail.com</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
-                    <div class="footer__widget">
-                        <h6>Useful Links</h6>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">About Our Shop</a></li>
-                            <li><a href="#">Secure Shopping</a></li>
-                            <li><a href="#">Delivery infomation</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Our Sitemap</a></li>
-                        </ul>
-                        <ul>
-                            <li><a href="#">Who We Are</a></li>
-                            <li><a href="#">Our Services</a></li>
-                            <li><a href="#">Projects</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Innovation</a></li>
-                            <li><a href="#">Testimonials</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="footer__widget">
-                        <h6>Join Our Newsletter Now</h6>
-                        <p>Get E-mail updates about our latest shop and special offers.</p>
-                        <form action="#">
-                            <input type="text" placeholder="Enter your mail">
-                            <button type="submit" class="site-btn">Subscribe</button>
-                        </form>
-                        <div class="footer__widget__social">
-                            <a href="https://www.facebook.com/lenhat.lhn"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="footer__copyright">
-                        <div class="footer__copyright__text">
-                            <p>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                Copyright &copy;
-                                <script>
-                                    document.write(new Date().getFullYear());
-                                </script> All rights reserved | This template is made with <i
-                                    class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com"
-                                    target="_blank">Colorlib</a>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            </p>
-                        </div>
-                        <div class="footer__copyright__payment"><img src="{{ asset('img/payment-item.png') }}"
-                                alt=""></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer> --}}
+    <!-- Copyright -->
+  </footer>
+  <!-- Footer -->
+    
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->

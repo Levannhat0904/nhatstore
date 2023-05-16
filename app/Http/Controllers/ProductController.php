@@ -36,16 +36,16 @@ class ProductController extends Controller
         //     ->groupBy(function ($product) {
         //         return Str::slug($product->cat->cat);
         //     });
-        $product_cats = cat::where('slug','LIKE','product.%')->get();   
+        $product_cats = cat::where('slug', 'LIKE', 'product.%')->get();
         // return $product_cats[0]->cat_product;
         $keyword = $request->input('keyword');
         if (!empty($keyword)) {
             $products = product::where('name', 'like', '%' . $keyword . '%')
-                   ->get()
-                   ->groupBy(function ($product) {
-                        return explode('.', $product->slug_cat)[0];
-                   });
-        }else{
+                ->get()
+                ->groupBy(function ($product) {
+                    return explode('.', $product->slug_cat)[0];
+                });
+        } else {
             $products = product::all()->groupBy(function ($product) {
                 return explode('.', $product->slug_cat)[0];
             });
@@ -59,7 +59,7 @@ class ProductController extends Controller
 
             $user = Auth::user()->name;
         }
-        return view('product.show', compact( 'products','product_hots', 'user','product_cats'));
+        return view('product.show', compact('products', 'product_hots', 'user', 'product_cats'));
 
         // $products = Product::where('cat_id', $cat_id)->get();
         // // $products = Product::where('cat_id', $cat)->get();
@@ -117,22 +117,23 @@ class ProductController extends Controller
         // $a= $request->session()->get('data');
         // return $a['id'];
         // return $data;
-        return view('product.checkout', compact('data','user'));
+        return view('product.checkout', compact('data', 'user'));
         // return redirect()->route('checkout', compact('data'));
     }
-    function test(){
-        $cat="iPhone";
-        $model = CatProduct::where('cat_item',"=",$cat)->first();
+    function test()
+    {
+        $cat = "iPhone";
+        $model = CatProduct::where('cat_item', "=", $cat)->first();
         // $model = CatProduct::all();
         return $model->id;
     }
-    function list($category)//route product.show->xử lí ajax
+    function list($category) //route product.show->xử lí ajax
     {
         $cat = $_GET['cat'];
         // return $cat;
         // $model = CatProduct::where('cat_item',$cat);
         // return $model->id;
-        $cat_id = CatProduct::where('cat_item',"=",$cat)->first()->id;
+        $cat_id = CatProduct::where('cat_item', "=", $cat)->first()->id;
         // // $cat = $cats->id;
         // return $cat_id;
         if (empty($cat)) {
@@ -146,14 +147,14 @@ class ProductController extends Controller
     function detail($id)
     {
         $products = product::find($id);
-        $cat_id=$products->cat_id;
+        $cat_id = $products->cat_id;
         $product_same = product::where('cat_id', $cat_id)->limit(4)->get();
         $user = "";
         if (!empty(Auth::user()->name)) {
 
             $user = Auth::user()->name;
         }
-        return view('product.detail', compact('products', 'product_same','user'));
+        return view('product.detail', compact('products', 'product_same', 'user'));
     }
     function buy_all_cart()
     {
@@ -164,7 +165,7 @@ class ProductController extends Controller
 
             $user = Auth::user()->name;
         }
-        return view('product.checkout', compact('carts','user'));
+        return view('product.checkout', compact('carts', 'user'));
     }
     function add_cart($id)
     {
@@ -238,35 +239,36 @@ class ProductController extends Controller
                 'price' => $v->price,
                 'qty_buy' => $v->qty,
                 'color' => $v->options->color,
-                
+
             ]);
         }
-        $data=[
-            'products' =>Cart::content(),
-            'orderCode' => (string)$orderCode,//mã đơn hàng
+        $data = [
+            'products' => Cart::content(),
+            'orderCode' => (string)$orderCode, //mã đơn hàng
             'address' => $address,
             'phone_number' => $phone_number,
             'email' => $email,
             'username' => $username,
-            'date'=>Order::find($order->id)->created_at
+            'date' => Order::find($order->id)->created_at
         ];
         Mail::to($email)->send(new order_all($data));
-        Cart::destroy();//thanh toan  xog thi xoa gio hangf
+        Cart::destroy(); //thanh toan  xog thi xoa gio hangf
         return redirect('/home')->with('status', 'Bạn đã đặt thành công');
     }
-    function sendmail(){
+    function sendmail()
+    {
         // $data=Cart::content();
-        $data=[
-            'product' =>Cart::content(),
-            
-        ];  
+        $data = [
+            'product' => Cart::content(),
+
+        ];
         // return view('product.mail');
         Mail::to('hiamnhatdz203@gmail.com')->send(new order_all($data));
         // Mail::to('')->send(new order_all($data));
     }
     function order(Request $request)
     {
-        
+
         // return $request->all();  
         // if (!empty($carts)) {
         //     return "fd";
@@ -287,7 +289,7 @@ class ProductController extends Controller
             'address' => $address,
             'phone_number' => $phone_number,
             'email' => $email,
-            'total'=>$data['qty'],
+            'total' => $data['qty'],
             'username' => $username,
             'total_order' => $data['total_order'],
             'status' => 'Đang chờ gửi hàng',
@@ -310,14 +312,14 @@ class ProductController extends Controller
             'color' => $data['color'],
 
         ]);
-        $data=[
+        $data = [
             'product_name' => product::find($id)->name,
-            'product_img'=>product::find($id)->img,
-            'product_date'=>product::find($id)->created_at,
-            'price' => product::find($data['id'])->price,//gia từng sản phẩm
-            'qty_buy' => $data['qty'],// số lượng mua
-            'color' => $data['color'],// màu sắc
-            'orderCode' => (string)$orderCode,//mã đơn hàng
+            'product_img' => product::find($id)->img,
+            'product_date' => product::find($id)->created_at,
+            'price' => product::find($data['id'])->price, //gia từng sản phẩm
+            'qty_buy' => $data['qty'], // số lượng mua
+            'color' => $data['color'], // màu sắc
+            'orderCode' => (string)$orderCode, //mã đơn hàng
             'address' => $address,
             'phone_number' => $phone_number,
             'email' => $email,
@@ -351,22 +353,40 @@ class ProductController extends Controller
             }
         }
     }
-    function device($cat){
+    function device(Request $request, $cat)
+    {
+        // return $cat;
+        $sort = $request->input('sort');
+        if (!empty($sort)) {
+            $_GET['sort'] = $sort;
+            // return  $_GET['sort'];
+        }
         $cat_perent = cat::all();
-        foreach($cat_perent as $v){
-            if( str::slug($v->cat) == $cat){
-                $id_cat= $v->id;
+        foreach ($cat_perent as $v) {
+            if (str::slug($v->cat) == $cat) {
+                $id_cat = $v->id;
             }
         }
-        $product_cat=CatProduct::where('cat_item',$cat)->first();
+        
+        $product_cat_perent = null;
+        $product_all_cat=null;
+        $product_cat_item = CatProduct::where('cat_item', $cat)->first(); //loc theo danh muc con
+        // return $product_cat_item->product;
         // return $cat_item->product;
-        if(isset($id_cat)){
+        if (isset($id_cat)) { //lọc theo danh mục cha
             // return $id_cat;
-            $product_cat =CatProduct::where('cat_id',$id_cat)->get();
-            
+            $product_cat_perent = CatProduct::where('cat_id', $id_cat)->get();
+            $cat=cat::find($id_cat)->cat;
+            $product_all_cat=product::where('slug_cat', 'LIKE', $cat.'%')->get();//
         }
-        // $product_cats = cat::where('slug','LIKE','product.%')->get(); 
-        return view('product.smartphone',compact('product_cat',));
+        $user = "";
+        if (!empty(Auth::user()->name)) {
+
+            $user = Auth::user()->name;
+        }
+        
+        $product_cats = cat::where('slug', 'LIKE', 'product.%')->get();   //lấy danh mục cha
+        // return $product;
+        return view('product.smartphone', compact('product_cat_perent', 'product_cat_item', 'product_cats', 'user','product_all_cat'));
     }
-    
 }
