@@ -3,94 +3,33 @@
     integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous">
 </script>
 @section('navbar')
-    <section class="hero hero-normal">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="hero__categories">
-                        <div class="hero__categories__all">
-                            <i class="fa fa-bars"></i>
-                            <span>Danh mục sản phẩm</span>
-                        </div>
-
-                        <ul>
-                            <style>
-                                .hiddenn {
-                                    display: none;
-                                }
-
-                                .hiddenn.active {
-                                    display: block;
-                                }
-                            </style>
-
-                            <div style="font-size: 1.6rem">
-                                @foreach ($product_cats as $index => $product_cat)
-                                    <div>
-                                        <a href="{{ route('product.device',Str::slug($product_cat->cat)) }}"><span
-                                                data-target="hiddenn{{ $index }}">{{ $product_cat->cat }}</span></a>
-                                        <span style="margin: 10px" class="shows"><i
-                                                class="fa-solid fa-caret-down fa-beat"></i></span>
-                                        <div class="hiddenn" id="hiddenn{{ $index }}">
-                                            @foreach ($product_cat->cat_product as $cat)
-                                                <div style="margin: 20px">
-                                                    <a href="{{ route('product.device',Str::slug($cat->cat_item)) }}">{{ $cat->cat_item }}</a>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                @endforeach
-
-                            </div>
-                            <script>
-                                $(document).ready(function() {
-                                    $('.shows').click(function() {
-                                        var target = $(this).prev().find('span').data('target');
-                                        $('#' + target).toggle();
-                                    });
-                                });
-                            </script>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                {{--  --}}
-                                <input type="text" name="keyword" value="{{ request()->input('keyword') }}"
-                                    placeholder="Bạn cần tìm gì?">
-                                <button type="submit" name="btn-search" value="Tìm kiếm" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>
-                        <div class="hero__search__phone">
-                            <div class="hero__search__phone__icon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                            <div class="hero__search__phone__text">
-                                <h5>0559886909</h5>
-                                <span>support 24/7 time</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
 @endsection
 @section('content')
     <section class="categories">
         <div class="container">
-            <div class="section-title"><img style="width: 500px; height: 90px; " src="{{ asset('img/tophot.png') }}"
+            {{-- <div class="section-title"><img style="width: 500px; height: 90px; " src="{{ asset('img/tophot.png') }}"
                     alt="title" loading="lazy">
-            </div>
+            </div> --}}
+            
             <div class="row">
+                <div class="cb_tip"><span id="dot"><img src="//clickbuy.com.vn/clipse.svg" alt="clipse"></span>
+                    <div class="textwidget">
+                        <p>
+                            <a href="https://clickbuy.com.vn/samsung-galaxy-uu-dai-cuc-khung/" target="_blank"rel="noopener">
+                                <strong>
+                                    <span style="color: #ff0000;">TOP BÁN CHẠY</span>
+                                </strong>
+                            </a>
+                        </p>
+                    </div>
+                
                 <div class="categories__slider owl-carousel">
                     @foreach ($product_hots as $p)
                         <div class="col-lg-3">
                             <a href="{{ route('product.detail', $p->id) }}">
                                 <div class="categories__item set-bg" data-setbg="{{ asset($p->img) }}"
-                                    style="width: 200px; height: 200px;display: flexbox; margin: 0 auto">
+                                    style="width: 200px; height: 200px;display: flexbox; margin: 0 auto;">
                                 </div>
                             </a>
                             <div>
@@ -102,6 +41,7 @@
                         </div>
                     @endforeach
                 </div>
+            </div>
             </div>
         </div>
     </section>
@@ -138,7 +78,9 @@
 
                         <div id="product-list">
                             <div class="row featured__filter catagory_{{ Str::slug($key, '_') }}" id="productContainer">
-                                @foreach ($productx as $product)
+                                @foreach ( collect($productx)->take(12) as $product)
+                                {{-- @foreach ($productx->paginate(10) as $product) --}}
+
                                     <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
                                         <div class="featured__item">
 
@@ -170,7 +112,7 @@
     <!-- Featured Section End -->
 
 
-    <div class="cb_tip"><span id="dot"><img src="//clickbuy.com.vn/clipse.svg" alt="clipse"></span>
+    {{-- <div class="cb_tip"><span id="dot"><img src="//clickbuy.com.vn/clipse.svg" alt="clipse"></span>
         <div class="textwidget">
             <p>
                 <a href="https://clickbuy.com.vn/samsung-galaxy-uu-dai-cuc-khung/" target="_blank"rel="noopener">
@@ -180,7 +122,7 @@
                 </a>
             </p>
         </div>
-    </div>
+    </div> --}}
     <!-- Latest Product Section Begin -->
     {{-- <section class="latest-product spad">
         <div class="container">
@@ -382,68 +324,11 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- Latest Product Section End -->
 
     <!-- Blog Section Begin -->
-    <section class="from-blog spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title from-blog__title">
-                        <h2>From The Blog</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic">
-                            <img src="{{ asset('img/blog/blog-1.jpg') }}" alt="">
-                        </div>
-                        <div class="blog__item__text">
-                            <ul>
-                                <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                                <li><i class="fa fa-comment-o"></i> 5</li>
-                            </ul>
-                            <h5><a href="#">Cooking tips make cooking simple</a></h5>
-                            <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic">
-                            <img src="{{ asset('img/blog/blog-2.jpg') }}" alt="">
-                        </div>
-                        <div class="blog__item__text">
-                            <ul>
-                                <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                                <li><i class="fa fa-comment-o"></i> 5</li>
-                            </ul>
-                            <h5><a href="#">6 ways to prepare breakfast for 30</a></h5>
-                            <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic">
-                            <img src="{{ asset('img/blog/blog-3.jpg') }}" alt="">
-                        </div>
-                        <div class="blog__item__text">
-                            <ul>
-                                <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                                <li><i class="fa fa-comment-o"></i> 5</li>
-                            </ul>
-                            <h5><a href="#">Visit the clean farm in the US</a></h5>
-                            <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> --}}
+    
     <!-- Blog Section End -->
 
     <!-- Footer Section Begin -->

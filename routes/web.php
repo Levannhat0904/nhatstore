@@ -6,9 +6,12 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminPostController;
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,7 +37,15 @@ Auth::routes();
 //     Route::post('/admin/user/store','store');
 // Route::get('/admin/dashboard', 'dashboard');
 // });
+
+Route::get('/page/{cat}', [PageController::class, 'index'])->name('page.index');
+
+
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/detail{id}', [BlogController::class, 'detail'])->name('blog.detail');
+
 Route::get('/dashbroad', [DashboardController::class, 'show'])->middleware('auth');
+Route::get('/user/profile', [UserController::class, 'index'])->name('user.profile')->middleware('auth');
 Route::middleware(['auth', 'can:post.manager'])->group(function () {
     //
     // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

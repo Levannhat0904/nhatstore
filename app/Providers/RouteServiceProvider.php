@@ -17,9 +17,9 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/dashbroad';//sau khi dăngd nhập xog thì chuyển hướng đến đây
+    public const HOME = "/";//sau khi dăngd nhập xog thì chuyển hướng đến đây
     
-
+    
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
      *

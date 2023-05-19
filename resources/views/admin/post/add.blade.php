@@ -6,7 +6,7 @@
                 Thêm bài viết
             </div>
             <div class="card-body">
-                <form action="{{ url('admin/post/store') }}" method="POST">
+                <form action="{{ url('admin/post/store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="title">Tiêu đề bài viết</label>
@@ -15,6 +15,14 @@
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
+                    <div class="form-group">
+                        <label for="img">Ảnh</label>
+                        <div></div>
+                        <input type="file" name="img" old('img') multiple="multiple" id="img">
+                    </div>
+                    @error('img')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
                     <div class="form-group">
                         <label for="content">Nội dung bài viết</label>
                         <textarea name="content" class="form-control" id="content" cols="30" rows="5"></textarea>
@@ -33,7 +41,6 @@
                                     @endforeach
                                 </optgroup>
                             @endforeach
-
                         </select>
                         @error('category')
                             <small class="text-danger">{{ $message }}</small>

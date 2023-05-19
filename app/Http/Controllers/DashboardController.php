@@ -20,7 +20,7 @@ class DashboardController extends Controller
     function show()
     {
         $orders = Order::OrderBy('id', 'desc')->paginate(10);
-        $order_detail =Order::find(4)->order_detail;
+        // $order_detail =Order::find(4)->order_detail;
         // return $order_detail->find(5)->product->productCat->catagory_item;
         // return $order;                                                                                                                                                                      
         $order_success = Order::where('status', 'Thành công')->get(); // đơn hàng thành công

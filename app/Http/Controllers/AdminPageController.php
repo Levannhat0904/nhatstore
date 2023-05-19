@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\cat;
 use App\Models\Page;
 use App\Models\Post;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
@@ -40,6 +41,7 @@ class AdminPageController extends Controller
             ]
         );
         $cat = $request->input('category');
+        $slug= Str::slug($cat);
         // $cat_id = cat::select('id')->where('catagory_item', "$cat")->get();
         // return $cat_id[0]->id;// trả về id của danh mục con
         $post = array([
@@ -54,7 +56,8 @@ class AdminPageController extends Controller
             'title' => $request->input('title'),
             'content' => $request->input('content'),
             'cat' => $request->input('category'),
-            'user_id' =>  Auth::id()
+            'user_id' =>  Auth::id(),
+            'slug'=>$slug
         ]);
         return redirect('admin/page/list')->with('status', 'Thêm bài viết thành công');
 
@@ -168,13 +171,15 @@ class AdminPageController extends Controller
                 ]
             );
             $cat = $request->input('category');
+            $slug =Str::slug($cat);
             // return $cat_id[0]->id;// trả về id của danh mục con
             // return "haha";
             Page::where('id', $id)->update([
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
                 'cat' => $request->input('category'),
-                'user_id' =>  Auth::id()
+                'user_id' =>  Auth::id(),
+                'slug'=>$slug
             ]);
             return redirect('admin/page/list')->with('status', 'đã cập nhật bài viết thành công');
         }

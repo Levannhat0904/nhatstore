@@ -11,7 +11,7 @@
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -20,7 +20,9 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }} " type="text/css">
     {{-- <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }} " type="text/css"> --}}
     <link rel="stylesheet" href="{{ asset('css/elegant-icons.css') }} " type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ asset('css/nice-select.css') }} " type="text/css">
     <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }} " type="text/css">
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }} " type="text/css">
@@ -67,52 +69,54 @@
                 </ul>
             </div> --}}
             {{-- @yield('user_responsive') --}}
-            @if (!empty($user))
-        <div class="dropdown">
-            {{-- <button class="dropbtn">Dropdown</button> --}}
-            <button type="button" class="btn dropdown-toggle">
-                <div class="header__top__right__auth">
-                    <a href="#">
-                        <i class="fa fa-user"></i>
-                        {{ $user }}</a>
-                </div>
-            </button>
-            <div class="dropdown-content">
-                <a class="dropdown-item" href="#" style="font-size: 1.6rem; text-align: left;"><i
-                        style="margin-right: 10px" class="fa fa-user"></i> Tài khoản </a>
-                <a class="dropdown-item" style="font-size: 1.6rem; text-align: left;" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
+            @if (Auth::check())
+                <div class="dropdown">
+                    {{-- <button class="dropbtn">Dropdown</button> --}}
+                    <button type="button" class="btn dropdown-toggle">
+                        <div class="header__top__right__auth">
+                            <a href="#">
+                                <i class="fa fa-user"></i>
+                                {{ Auth::user()->name }}</a>
+                        </div>
+                    </button>
+                    <div class="dropdown-content">
+                        {{-- <a class="dropdown-item" href="#" style="font-size: 1.6rem; text-align: left;"><i
+                        style="margin-right: 10px" class="fa fa-user"></i> Tài khoản </a> --}}
+                        <a class="dropdown-item" style="font-size: 1.6rem; text-align: left;"
+                            href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
                                  document.getElementById('logout-form').submit();"><i
-                        style="margin-right: 10px" class="fa fa-sign-in"></i>
-                    {{ __('Logout') }}
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-            </div>
-        </div>
-    @else
-        <div class="header__top__right__auth">
+                                style="margin-right: 10px" class="fa fa-sign-in"></i>
+                            {{ __('Logout') }}
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
+                </div>
+            @else
+                <div class="header__top__right__auth">
 
-            <a class="" style="font-size: 1.6rem;background: none; text-align: left;" href="{{ route('logout') }}"
-                onclick="event.preventDefault();
+                    <a class="" style="font-size: 1.6rem;background: none; text-align: left;"
+                        href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
                                  document.getElementById('logout-form').submit();">
-                <i style="margin-right: 10px" class="fa fa-user"></i>
-                Log inn
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
-        </div>
-    @endif
+                        <i style="margin-right: 10px" class="fa fa-user"></i>
+                        Loggin
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </div>
+            @endif
             {{-- <div class="header__top__right__auth">
                 <a href="#"><i class="fa fa-user"></i> Login</a>
             </div> --}}
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="active"><a href="./index.html">Home</a></li>
-                <li><a href="./shop-grid.html">Shop</a></li>
+                <li class="active"><a href="{{ route('home') }}">Home</a></li>
+                {{-- <li><a href="./shop-grid.html">Shop</a></li> --}}
                 <li><a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
                         <li><a href="./shop-details.html">Shop Details</a></li>
@@ -121,16 +125,14 @@
                         <li><a href="./blog-details.html">Blog Details</a></li>
                     </ul>
                 </li>
-                <li><a href="./blog.html">Blog</a></li>
-                <li><a href="./contact.html">Contact</a></li>
+                <li><a href="{{ route('blog.index') }}">Tin tức</a></li>
+                {{-- <li><a href="./contact.html">Contact</a></li> --}}
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
         <div class="header__top__right__social">
             <a href="https://www.facebook.com/lenhat.lhn"><i class="fa-brands fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-pinterest-p"></i></a>
+            <a href="http://www.instagram.com/le_vannhat__t"><i class="fa-brands fa-square-instagram"></i></a>
         </div>
         <div class="humberger__menu__contact">
             <ul>
@@ -157,14 +159,15 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__right">
                             <div class="header__top__right__social">
-                                <a href="https://www.facebook.com/lenhat.lhn"><i class="fa-brands fa-facebook"></i></a>
-                                <a href="http://www.instagram.com/le_vannhat__t"><i class="fa-brands fa-square-instagram"></i></a>
+                                <a href="https://www.facebook.com/lenhat.lhn"><i
+                                        class="fa-brands fa-facebook"></i></a>
+                                <a href="http://www.instagram.com/le_vannhat__t"><i
+                                        class="fa-brands fa-square-instagram"></i></a>
                                 {{-- <a href="#"><i class="fa-brands fa-tiktok" ></i></a>
                                 <a href="#"><i class="fa fa-pinterest-p"></i></a> --}}
                             </div>
                             <div class="header__top__right__language">
-                                <img style="width: 30px"
-                                    src="{{ asset('img/vn.jpg') }} " alt="">
+                                <img style="width: 30px" src="{{ asset('img/vn.jpg') }} " alt="">
                                 <div>Việt Nam</div>
                                 {{-- <span class="arrow_carrot-down"></span>
                                 <ul>
@@ -174,18 +177,18 @@
                             </div>
                             {{-- @yield('users') --}}
 
-                            @if (!empty($user))
+                            @if (Auth::check())
                                 <div class="dropdown">
                                     {{-- <button class="dropbtn">Dropdown</button> --}}
                                     <button type="button" class="btn dropdown-toggle">
                                         <div class="header__top__right__auth">
-                                            <a href="#"><i class="fa fa-user"></i>{{ $user }}</a>
+                                            <a href="#"><i class="fa fa-user"></i>{{Auth::user()->name }}</a>
                                         </div>
                                     </button>
                                     <div class="dropdown-content">
-                                        <a class="dropdown-item" href="#"
+                                        {{-- <a class="dropdown-item" href="#"
                                             style="font-size: 1.6rem; text-align: left;"><i style="margin-right: 10px"
-                                                class="fa fa-user"></i> Tài khoản </a>
+                                                class="fa fa-user"></i> Tài khoản </a> --}}
                                         <a class="dropdown-item" style="font-size: 1.6rem; text-align: left;"
                                             href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
@@ -236,20 +239,19 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <nav class="header__menu">
+                    <nav class="header__menu" style="text-align: center">
                         <ul>
                             <li class="active"><a href="{{ route('home') }}">Home</a></li>
-                            <li><a href="./shop-grid.html">Shop</a></li>
+                            {{-- <li><a href="./shop-grid.html">Shop</a></li> --}}
                             <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
-                                    <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
+                                    @foreach ($pages as $page){{-- $pages là biến toàn cục dc dịnh nghĩa trong appseviceprovider --}}
+                                    <li><a href="{{ route('page.index', $page->slug) }}">{{ $page->cat }}</a></li>
+                                    @endforeach
                                 </ul>
                             </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="{{ route('blog.index') }}">Tin tức</a></li>
+                            {{-- <li><a href="./contact.html">Contact</a></li> --}}
                         </ul>
                     </nav>
                 </div>
@@ -273,6 +275,80 @@
     </header>
     <!-- Header Section End -->
     @yield('navbar')
+    <section class="hero hero-normal">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="hero__categories">
+                        <div class="hero__categories__all">
+                            <i class="fa fa-bars"></i>
+                            <span>Danh mục sản phẩm</span>
+                        </div>
+
+                        <ul>
+                            <style>
+                                .hiddenn {
+                                    display: none;
+                                }
+
+                                .hiddenn.active {
+                                    display: block;
+                                }
+                            </style>
+
+                            <div style="font-size: 1.6rem">
+                                @foreach ($product_cats as $index => $product_cat)
+                                    <div>
+                                        <a href="{{ route('product.device',Str::slug($product_cat->cat)) }}"><span
+                                                data-target="hiddenn{{ $index }}">{{ $product_cat->cat }}</span></a>
+                                        <span style="margin: 10px" class="shows"><i
+                                                class="fa-solid fa-caret-down fa-beat"></i></span>
+                                        <div class="hiddenn" id="hiddenn{{ $index }}">
+                                            @foreach ($product_cat->cat_product as $cat)
+                                                <div style="margin: 20px">
+                                                    <a href="{{ route('product.device',Str::slug($cat->cat_item)) }}">{{ $cat->cat_item }}</a>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                            </div>
+                            <script>
+                                $(document).ready(function() {
+                                    $('.shows').click(function() {
+                                        var target = $(this).prev().find('span').data('target');
+                                        $('#' + target).toggle();
+                                    });
+                                });
+                            </script>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="hero__search">
+                        <div class="hero__search__form">
+                            <form action="{{ route('home') }}">
+                                {{--  --}}
+                                <input type="text" name="keyword" value="{{ request()->input('keyword') }}"
+                                    placeholder="Bạn cần tìm gì?">
+                                <button type="submit" name="btn-search" value="Tìm kiếm" class="site-btn">SEARCH</button>
+                            </form>
+                        </div>
+                        <div class="hero__search__phone">
+                            <div class="hero__search__phone__icon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <div class="hero__search__phone__text">
+                                <h5>0559886909</h5>
+                                <span>support 24/7 time</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     @yield('content')
     <!-- Hero Section Begin -->
 
@@ -280,88 +356,89 @@
 
     <!-- Footer Section Begin -->
     <!-- Footer -->
-<footer class=" text-lg-start bg-white text-muted">
-    <!-- Section: Social media -->
-   
-  
-    <!-- Section: Links  -->
-    <section style="background-color: gainsboro" class="">
-      <div class="container text-md-start mt-5">
-        <!-- Grid row -->
-        <div class="row mt-3">
-          <!-- Grid column -->
-          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-            <!-- Content -->
-            <h6 class="text-uppercase fw-bold mb-4">
-              <i class="fas fa-gem me-3 text-secondary"></i>Nhatstore
-            </h6>
-            <p>
-                Nhatstore luôn cung cấp luôn là sản phẩm chính hãng có thông tin rõ ràng, chính sách ưu đãi cực lớn cho khách hàng có thẻ thành viên.
-            </p>
-          </div>
-          <!-- Grid column -->
-  
-          <!-- Grid column -->
-          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">
-                Thông tin cửa hàng
-            </h6>
-            <style>
-                .text-reset{
-                    font-size: 1.6rem;
-                }
-            </style>
-            <ul>
-                <li class="text-reset">106 - Trần Bình - Cầu Giấy - Hà Nội</li>
-                <li class="text-reset">0987.654.321 - 0989.989.989</li>
-                <li class="text-reset">vshop@gmail.com</li>
-            </ul>
-          </div>
-          <!-- Grid column -->
-  
-          <!-- Grid column -->
-          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">
-                Chính sách mua hàng
-            </h6>
-            <ul>
-                <li class="text-reset">Quy định - chính sách</li>
-                <li class="text-reset">Chính sách bảo hành - đổi trả</li>
-                <li class="text-reset">Giao hàng - lắp đặt</li>
-            </ul>
-          </div>
-          <!-- Grid column -->
-  
-          <!-- Grid column -->
-          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">Liên Hệ</h6>
-            <p><i class="fas fa-home me-3 text-secondary"></i> 70Phùng Hưng - Hà Đông - Hà Nội</p>
-            <p>
-              <i class="fas fa-envelope me-3 text-secondary"></i>
-              hiamnhatdz203@gmail.com
-            </p>
-            <p><i class="fas fa-phone me-3 text-secondary"></i> 0965 203 734</p>
-            <p><i class="fas fa-phone me-3 text-secondary"></i> 0559 886 909</p>
-          </div>
-          <!-- Grid column -->
+    <footer class=" text-lg-start bg-white text-muted">
+        <!-- Section: Social media -->
+
+
+        <!-- Section: Links  -->
+        <section style="background-color: gainsboro" class="">
+            <div class="container text-md-start mt-5">
+                <!-- Grid row -->
+                <div class="row mt-3">
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <!-- Content -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            <i class="fas fa-gem me-3 text-secondary"></i>Nhatstore
+                        </h6>
+                        <p>
+                            Nhatstore luôn cung cấp luôn là sản phẩm chính hãng có thông tin rõ ràng, chính sách ưu đãi
+                            cực lớn cho khách hàng có thẻ thành viên.
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Thông tin cửa hàng
+                        </h6>
+                        <style>
+                            .text-reset {
+                                font-size: 1.6rem;
+                            }
+                        </style>
+                        <ul>
+                            <li class="text-reset">106 - Trần Bình - Cầu Giấy - Hà Nội</li>
+                            <li class="text-reset">0987.654.321 - 0989.989.989</li>
+                            <li class="text-reset">vshop@gmail.com</li>
+                        </ul>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Chính sách mua hàng
+                        </h6>
+                        <ul>
+                            <li class="text-reset">Quy định - chính sách</li>
+                            <li class="text-reset">Chính sách bảo hành - đổi trả</li>
+                            <li class="text-reset">Giao hàng - lắp đặt</li>
+                        </ul>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">Liên Hệ</h6>
+                        <p><i class="fas fa-home me-3 text-secondary"></i> 70Phùng Hưng - Hà Đông - Hà Nội</p>
+                        <p>
+                            <i class="fas fa-envelope me-3 text-secondary"></i>
+                            hiamnhatdz203@gmail.com
+                        </p>
+                        <p><i class="fas fa-phone me-3 text-secondary"></i> 0965 203 734</p>
+                        <p><i class="fas fa-phone me-3 text-secondary"></i> 0559 886 909</p>
+                    </div>
+                    <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+            </div>
+        </section>
+        <!-- Section: Links  -->
+
+        <!-- Copyright -->
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
+            © 2023 Copyright:
+            <a class="text-reset fw-bold" href="https://mdbootstrap.com/">Nhatstore</a>
         </div>
-        <!-- Grid row -->
-      </div>
-    </section>
-    <!-- Section: Links  -->
-  
-    <!-- Copyright -->
-    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
-      © 2023 Copyright:
-      <a class="text-reset fw-bold" href="https://mdbootstrap.com/">Nhatstore</a>
-    </div>
-    <!-- Copyright -->
-  </footer>
-  <!-- Footer -->
-    
+        <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
@@ -371,11 +448,11 @@
     <script src="{{ asset('js/jquery-ui.min.js') }} "></script>
     <script src="{{ asset('js/jquery.slicknav.js') }} "></script>
     <script src="{{ asset('js/mixitup.min.js') }} "></script>
-    <script src="{{ asset('js/owl.carousel.min.js') }} "></script>  
+    <script src="{{ asset('js/owl.carousel.min.js') }} "></script>
     <script src="{{ asset('js/app.js') }} "></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     {{-- <script src="{{ asset('js/app.js') }} "></script> --}}
-    
+
     @yield('script')
     <script>
         // $(document).ready(function() {
@@ -454,13 +531,13 @@
             $(".cat_pro").on("click", "li", function() {
                 var cat = $(this).html();
                 var dataCatValue = $(this).data('cat');
-                var class_cat = "."+dataCatValue;
+                var class_cat = "." + dataCatValue;
                 // alert(class_cat)
                 // alert(dataCatValue)
                 // alert(cat);
                 var data = {
                     cat: cat,
-                    dataCatValue:dataCatValue
+                    dataCatValue: dataCatValue
                 };
                 $.ajax({
                     url: "{{ route('product.show') }}",
@@ -474,7 +551,8 @@
                     success: function(data) {
                         console.log(data)
                         // Xử lý dữ liệu nhận về từ server
-                        var products =data; // Giả sử dữ liệu $products được trả về dưới dạng JSON
+                        var products =
+                        data; // Giả sử dữ liệu $products được trả về dưới dạng JSON
                         // console.log(products.length)
                         // Tạo biến để lưu nội dung mới
                         var newContent = "";
@@ -515,7 +593,7 @@
 
                         }
 
-                            // var newContent=""
+                        // var newContent=""
                         // // // Đưa nội dung mới vào container
                         $(class_cat).html(newContent);
                         // }

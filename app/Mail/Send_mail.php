@@ -49,7 +49,7 @@ class Send_mail extends Mailable
     {
         return new Content(
 
-            view: 'product.mail',
+            view: 'mail.mail',
             with: $this->data,
         );
     }

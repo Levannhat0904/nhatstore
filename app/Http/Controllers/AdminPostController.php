@@ -29,12 +29,14 @@ class AdminPostController extends Controller
             [
                 'title' => 'required',
                 'content' => 'required',
-                'category' => 'required'
+                'category' => 'required',
+                'img' => 'required|mimes:jpeg,jpg,png,gif|max:2048',
             ],
             [
                 'required' => ':attribute không được để trống',
             ],
             [
+                'img'=>'Hình ảnh',
                 'title' => 'Tiêu đề',
                 'content' => 'Nội dung',
                 'category' => 'Danh mục'
@@ -42,6 +44,12 @@ class AdminPostController extends Controller
         );
         //   return $request->all();
         $cat_id = $request->input('category');
+        if ($request->hasFile('img')){
+            $img=$request->file('img')->getClientOriginalName();
+            $path = $request->file('img')->move('img_post', $img); 
+            $img_post="img_post/".$img;
+            $input['img'] = $img_post;
+        }
         // return $cat_id[0]->id;// trả về id của danh mục con
         $post = array([
             'title' => $request->input('title'),
@@ -53,7 +61,8 @@ class AdminPostController extends Controller
             'title' => $request->input('title'),
             'content' => $request->input('content'),
             'cat_id' => $cat_id,
-            'user_id' =>  Auth::id()
+            'user_id' =>  Auth::id(),
+            'img'=>$input['img']
         ]);
         return redirect('admin/post/list')->with('status', 'Thêm bài viết thành công');
 
@@ -87,7 +96,8 @@ class AdminPostController extends Controller
             [
                 'title' => 'required',
                 'content' => 'required',
-                'category' => 'required'
+                'category' => 'required',
+                'img' => 'required|mimes:jpeg,jpg,png,gif|max:2048',
             ],
             [
                 'required' => ':attribute không được để trống',
@@ -95,9 +105,16 @@ class AdminPostController extends Controller
             [
                 'title' => 'Tiêu đề',
                 'content' => 'Nội dung',
-                'category' => 'Danh mục'
+                'category' => 'Danh mục',
+                'img'=>'Hình ảnh'
             ]
         );
+        if ($request->hasFile('img')){
+            $img=$request->file('img')->getClientOriginalName();
+            $path = $request->file('img')->move('img_post', $img); 
+            $img_post="img_post/".$img;
+            $input['img'] = $img_post;
+        }
         //   return $request->all();
         $cat_id = $request->input('category');
         // return $cat_id[0]->id;// trả về id của danh mục con
@@ -111,6 +128,7 @@ class AdminPostController extends Controller
             'title' => $request->input('title'),
             'content' => $request->input('content'),
             'cat_id' => $cat_id,
+            'img'=>$input['img'],
             'user_id' =>  Auth::id()
         ]);
         return redirect('admin/post/list')->with('status', 'Thêm bài viết thành công');

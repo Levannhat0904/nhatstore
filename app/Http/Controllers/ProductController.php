@@ -29,6 +29,7 @@ use function PHPUnit\Framework\returnSelf;
 class ProductController extends Controller
 {
     //
+    
     function show(Request $request)
     {
         // $cat_product = CatProduct::with('cat')
@@ -59,7 +60,8 @@ class ProductController extends Controller
 
             $user = Auth::user()->name;
         }
-        return view('product.show', compact('products', 'product_hots', 'user', 'product_cats'));
+        // $user=$this->user;
+        return view('product.show', compact('products', 'product_hots', 'product_cats'));
 
         // $products = Product::where('cat_id', $cat_id)->get();
         // // $products = Product::where('cat_id', $cat)->get();
@@ -253,7 +255,7 @@ class ProductController extends Controller
         ];
         Mail::to($email)->send(new order_all($data));
         Cart::destroy(); //thanh toan  xog thi xoa gio hangf
-        return redirect('/home')->with('status', 'Bạn đã đặt thành công');
+        return redirect()->route('home')->with('status', 'Bạn đã đặt thành công');
     }
     function sendmail()
     {
@@ -327,7 +329,7 @@ class ProductController extends Controller
             'total_order' => $data['total_order'],
         ];
         Mail::to($email)->send(new Send_mail($data));
-        return redirect('/home')->with('status', 'Bạn đã đặt thành công');
+        return redirect()->route('home')->with('status', 'Bạn đã đặt thành công');
     }
     function update_cart()
     {
@@ -379,14 +381,10 @@ class ProductController extends Controller
             $cat=cat::find($id_cat)->cat;
             $product_all_cat=product::where('slug_cat', 'LIKE', $cat.'%')->get();//
         }
-        $user = "";
-        if (!empty(Auth::user()->name)) {
-
-            $user = Auth::user()->name;
-        }
+        
         
         $product_cats = cat::where('slug', 'LIKE', 'product.%')->get();   //lấy danh mục ch
         // return $product;
-        return view('product.smartphone', compact('product_cat_perent', 'product_cat_item', 'product_cats', 'user','product_all_cat'));
+        return view('product.smartphone', compact('product_cat_perent', 'product_cat_item', 'product_cats', 'product_all_cat'));
     }
 }

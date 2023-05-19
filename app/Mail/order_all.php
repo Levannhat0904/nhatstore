@@ -46,7 +46,7 @@ class order_all extends Mailable
     public function content()
     {
         return new Content(
-            view: 'product.mail_order_all',
+            view: 'mail.mail_order_all',
             with: $this->data,
         );
     }

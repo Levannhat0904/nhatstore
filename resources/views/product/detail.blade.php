@@ -41,7 +41,7 @@
                         <form action="{{ route('buy_item', $products->id) }}">
                             @csrf       
                         <h3>{{$products->name}}</h3>
-                        <div class="product__details__price">{{$products->price}} đ</div>
+                        <div class="product__details__price">{{ number_format($products->price, 0, ',', '.') }}{{ 'vnđ' }}</div>
                         <h3>Màu sắc</h3>
                         @php
                             $k = json_decode($products->color);
@@ -85,13 +85,15 @@
                         {{-- <a href="{{route('checkout')}}" class="primary-btn">Mua ngay</a> --}}
                     </div>
                 </div>
-                <div class="col-lg-12">
-                    <p><b style="font-size: 30px">Chi tiết sản phẩm</b> </p>
-                    {!!$products->content!!}
-                </div>
             </div>
         </div>
     </section>
+    <div class="col-lg-12">
+        <div style="margin: 100px 50px" >
+           <p><b style="font-size: 30px">Chi tiết sản phẩm</b> </p>
+           {!!$products->content!!}
+       </div>
+    </div>
     <!-- Product Details Section End -->
 
     <!-- Related Product Section Begin -->

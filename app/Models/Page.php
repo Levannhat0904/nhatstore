@@ -10,7 +10,7 @@ class Page extends Model
 {
     use SoftDeletes;
     use HasFactory;
-    protected $fillable =['title', 'content', 'cat', 'user_id'];
+    protected $fillable =['title', 'content', 'slug','cat', 'user_id'];
     function user(){
         // return $this->hasOne('App\featureImage');
         return $this->belongsTo(User::class);//(1-n)

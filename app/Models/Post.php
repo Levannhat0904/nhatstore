@@ -10,7 +10,7 @@ class Post extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = ['title', 'content', 'user_id', 'cat_id'];
+    protected $fillable = ['title', 'content', 'user_id', 'cat_id','img'];
     function user(){
         // return $this->hasOne('App\featureImage');
         return $this->belongsTo(User::class);//(1-n)

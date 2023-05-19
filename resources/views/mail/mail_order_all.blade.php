@@ -26,7 +26,7 @@
 
                         <p
                             style="margin:4px 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#444;line-height:18px;font-weight:normal">
-                            <span class="il">Tiki</span> rất vui thông báo đơn hàng {{$orderCode}} của quý khách đã được
+                            <span class="il">Nhật Store</span> rất vui thông báo đơn hàng {{$orderCode}} của quý khách đã được
                             tiếp nhận và đang trong quá trình xử lý. <span class="il">Nhật Store</span> sẽ thông báo đến
                             quý khách ngay khi hàng chuẩn bị được giao.
                         </p>
@@ -34,7 +34,7 @@
                         <h3
                             style="font-size:13px;font-weight:bold;color:#02acea;text-transform:uppercase;margin:20px 0 0 0;border-bottom:1px solid #ddd">
                             Thông tin đơn hàng {{$orderCode}} <span
-                                style="font-size:12px;color:#777;text-transform:none;font-weight:normal">({{$product_date}})</span></h3>
+                                style="font-size:12px;color:#777;text-transform:none;font-weight:normal">({{$date}})</span></h3>
                     </td>
                 </tr>
                 <tr>
@@ -74,7 +74,7 @@
                                             style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#444;line-height:18px;font-weight:normal">
                                             <strong>Phương thức thanh toán: </strong> Thanh toán tiền mặt khi nhận
                                             hàng<br>
-                                            <strong>Thời gian giao hàng dự kiến:</strong> Dự kiến giao hàng {{$product_date->modify('+3 day')->format('Y-m-d')}}- không giao ngày Chủ Nhật <br>
+                                            <strong>Thời gian giao hàng dự kiến:</strong> Dự kiến giao hàng {{$date->modify('+3 day')->format('Y-m-d')}} - không giao ngày Chủ Nhật <br>
                                             <strong>Phí vận chuyển: </strong> 30.000đ<br>
                                             {{-- <strong>Sử dụng bọc sách cao cấp Bookcare: </strong>  Không <br> --}}
                                         </p>
@@ -121,24 +121,26 @@
                             </thead>
                             <tbody bgcolor="#eee"
                                 style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#444;line-height:18px">
+                                @foreach ($products as $product)
                                 <tr>
-                                    <td align="left" style="padding:3px 9px" valign="top"><span>{{ $product_name }}
-                                            - {{ $color }}</span><br>
+                                    <td align="left" style="padding:3px 9px" valign="top"><span>{{ $product->name }}
+                                            - {{ $product->options->color }}</span><br>
                                     </td>
                                     <td align="left" style="padding:3px 9px" valign="top">
-                                        <span>{{ number_format($price, 0, ',', '.') }}{{ 'vnđ' }}</span></td>
-                                    <td align="left" style="padding:3px 9px" valign="top">{{ $qty_buy }}</td>
+                                        <span>{{ number_format($product->price, 0, ',', '.') }}{{ 'vnđ' }}</span></td>
+                                    <td align="left" style="padding:3px 9px" valign="top">{{ $product->qty }}</td>
                                     <td align="left" style="padding:3px 9px" valign="top"><span>0vnđ</span></td>
                                     <td align="right" style="padding:3px 9px" valign="top">
-                                        <span>{{ number_format($price, 0, ',', '.') }}{{ 'vnđ' }}</span></td>
+                                        <span>{{ number_format($product->subtotal, 0, ',', '.') }}{{ 'vnđ' }}</span></td>
                                 </tr>
+                                @endforeach
                             </tbody>
                             <tfoot
                                 style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#444;line-height:18px">
                                 <tr>
                                     <td align="right" colspan="4" style="padding:5px 9px">Tạm tính</td>
                                     <td align="right" style="padding:5px 9px">
-                                        <span>{{ number_format($price, 0, ',', '.') }}{{ 'vnđ' }}</span></td>
+                                        <span>{{ ($product->subtotal(0, ',', '.')) }}{{ 'vnđ' }}</span></td>
                                 </tr>
                                 <tr>
                                     <td align="right" colspan="4" style="padding:5px 9px">Phí vận chuyển</td>
@@ -149,7 +151,8 @@
                                     <td align="right" colspan="4" style="padding:7px 9px"><strong><big>Tổng giá trị
                                                 đơn hàng</big> </strong></td>
                                     <td align="right" style="padding:7px 9px">
-                                        <strong><big><span>{{ number_format($total_order, 0, ',', '.') }}{{ 'vnđ' }}</span>
+
+                                        <strong><big><span>{{number_format($product->total(0, '', '') + 30000,0,',','.') }}{{ 'vnđ' }}</span>
                                             </big> </strong></td>
                                 </tr>
                                 {{-- <tr bgcolor="#eee">
@@ -170,7 +173,7 @@
                                 tiết đơn hàng tại <span class="il">Tiki</span></a></div>
                     </td>
                 </tr>
-                <tr>
+                {{-- <tr>
                     <td>&nbsp;
                         <a href="https://x64km.mjt.lu/lnk/EAAAA8YY3CIAAAAKFZgAAJSoWj0AAAAA3NwAAAAAABPsQgBj4-EGE32OUpUFR8ipqZQzynXt_gAPBhU/6/KcAOvp1ftSvIZrOqA4L7cQ/aHR0cHM6Ly90aWtpLnZuL3NlcC9ob21l"
                             target="_blank"
@@ -179,8 +182,8 @@
                                 alt="banner" width="100%" class="CToWUd" data-bit="iit">
                         </a>
                     </td>
-                </tr>
-                <tr>
+                </tr> --}}
+                {{-- <tr>
                     <td>&nbsp;
                         <p
                             style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#444;line-height:18px;font-weight:normal">
@@ -206,13 +209,13 @@
                                     class="il">tiki</span>.vn/hc/vi</a>. Đội ngũ <span class="il">Tiki</span>
                             Care luôn sẵn sàng hỗ trợ bạn.</p>
                     </td>
-                </tr>
+                </tr> --}}
                 <tr>
                     <td>&nbsp;
-                        <p>Một lần nữa <span class="il">Nhật Store</span> cảm ơn quý khách.</p>
+                        <p> <span class="il">Nhật Store</span> cảm ơn quý khách.</p>
 
                         <p><strong><a
-                                    href="https://x64km.mjt.lu/lnk/EAAAA8YY3CIAAAAKFZgAAJSoWj0AAAAA3NwAAAAAABPsQgBj4-EGE32OUpUFR8ipqZQzynXt_gAPBhU/9/Oz6eHRBxY-l-V5QD_zJZQg/aHR0cDovL3Rpa2kudm4_dXRtX3NvdXJjZT10cmFuc2FjdGlvbmFsK2VtYWlsJnV0bV9tZWRpdW09ZW1haWwmdXRtX3Rlcm09bG9nbyZ1dG1fY2FtcGFpZ249bmV3K29yZGVy"
+                                    {{-- href="https://x64km.mjt.lu/lnk/EAAAA8YY3CIAAAAKFZgAAJSoWj0AAAAA3NwAAAAAABPsQgBj4-EGE32OUpUFR8ipqZQzynXt_gAPBhU/9/Oz6eHRBxY-l-V5QD_zJZQg/aHR0cDovL3Rpa2kudm4_dXRtX3NvdXJjZT10cmFuc2FjdGlvbmFsK2VtYWlsJnV0bV9tZWRpdW09ZW1haWwmdXRtX3Rlcm09bG9nbyZ1dG1fY2FtcGFpZ249bmV3K29yZGVy" --}}
                                     style="color:#00a3dd;text-decoration:none;font-size:14px" target="_blank"
                                     data-saferedirecturl="https://www.google.com/url?q=https://x64km.mjt.lu/lnk/EAAAA8YY3CIAAAAKFZgAAJSoWj0AAAAA3NwAAAAAABPsQgBj4-EGE32OUpUFR8ipqZQzynXt_gAPBhU/9/Oz6eHRBxY-l-V5QD_zJZQg/aHR0cDovL3Rpa2kudm4_dXRtX3NvdXJjZT10cmFuc2FjdGlvbmFsK2VtYWlsJnV0bV9tZWRpdW09ZW1haWwmdXRtX3Rlcm09bG9nbyZ1dG1fY2FtcGFpZ249bmV3K29yZGVy&amp;source=gmail&amp;ust=1683298949669000&amp;usg=AOvVaw0cACgAM2RvkAveiBp9nyma"><span
                                         class="il">Nhật Store</span></a> </strong></p>

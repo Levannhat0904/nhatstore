@@ -364,7 +364,7 @@ class AdminProductController extends Controller
             [
                 'name'=>'required',
                 'thumbnail' => 'required',
-                'img' => 'required',
+                'img' => 'required|mimes:jpeg,jpg,png,gif|max:2048',
                 'thumbnail.*' => 'mimes:jpeg,jpg,png,gif|max:2048',
                 'price'=>'required',
                 'content'=>'required',
