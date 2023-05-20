@@ -182,7 +182,7 @@
                                     {{-- <button class="dropbtn">Dropdown</button> --}}
                                     <button type="button" class="btn dropdown-toggle">
                                         <div class="header__top__right__auth">
-                                            <a href="#"><i class="fa fa-user"></i>{{Auth::user()->name }}</a>
+                                            <a href="#"><i class="fa fa-user"></i>{{ Auth::user()->name }}</a>
                                         </div>
                                     </button>
                                     <div class="dropdown-content">
@@ -245,8 +245,10 @@
                             {{-- <li><a href="./shop-grid.html">Shop</a></li> --}}
                             <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
-                                    @foreach ($pages as $page){{-- $pages là biến toàn cục dc dịnh nghĩa trong appseviceprovider --}}
-                                    <li><a href="{{ route('page.index', $page->slug) }}">{{ $page->cat }}</a></li>
+                                    @foreach ($pages as $page)
+                                        {{-- $pages là biến toàn cục dc dịnh nghĩa trong appseviceprovider --}}
+                                        <li><a href="{{ route('page.index', $page->slug) }}">{{ $page->cat }}</a>
+                                        </li>
                                     @endforeach
                                 </ul>
                             </li>
@@ -299,14 +301,15 @@
                             <div style="font-size: 1.6rem">
                                 @foreach ($product_cats as $index => $product_cat)
                                     <div>
-                                        <a href="{{ route('product.device',Str::slug($product_cat->cat)) }}"><span
+                                        <a href="{{ route('product.device', Str::slug($product_cat->cat)) }}"><span
                                                 data-target="hiddenn{{ $index }}">{{ $product_cat->cat }}</span></a>
                                         <span style="margin: 10px" class="shows"><i
                                                 class="fa-solid fa-caret-down fa-beat"></i></span>
                                         <div class="hiddenn" id="hiddenn{{ $index }}">
                                             @foreach ($product_cat->cat_product as $cat)
                                                 <div style="margin: 20px">
-                                                    <a href="{{ route('product.device',Str::slug($cat->cat_item)) }}">{{ $cat->cat_item }}</a>
+                                                    <a
+                                                        href="{{ route('product.device', Str::slug($cat->cat_item)) }}">{{ $cat->cat_item }}</a>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -332,7 +335,8 @@
                                 {{--  --}}
                                 <input type="text" name="keyword" value="{{ request()->input('keyword') }}"
                                     placeholder="Bạn cần tìm gì?">
-                                <button type="submit" name="btn-search" value="Tìm kiếm" class="site-btn">SEARCH</button>
+                                <button type="submit" name="btn-search" value="Tìm kiếm"
+                                    class="site-btn">SEARCH</button>
                             </form>
                         </div>
                         <div class="hero__search__phone">
@@ -398,16 +402,58 @@
                     <!-- Grid column -->
 
                     <!-- Grid column -->
-                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4" style="font-size: 1.6rem">
                         <!-- Links -->
-                        <h6 class="text-uppercase fw-bold mb-4">
-                            Chính sách mua hàng
-                        </h6>
-                        <ul>
-                            <li class="text-reset">Quy định - chính sách</li>
-                            <li class="text-reset">Chính sách bảo hành - đổi trả</li>
-                            <li class="text-reset">Giao hàng - lắp đặt</li>
+                        <style>
+                            #pageList li {
+                                display: none;
+                            }
+
+                            #pageList li.visible {
+                                display: list-item;
+                            }
+
+                            #showMoreBtn {
+                                display: none;
+                            }
+                        </style>
+
+                        <ul id="pageList">
+
+                            {{-- <li class="page-item">Item 1</li> --}}
+                            @foreach ($pages as $page)
+                                {{-- $pages là biến toàn cục dc dịnh nghĩa trong appseviceprovider --}}
+                                <li class="page-item"><a
+                                        href="{{ route('page.index', $page->slug) }}">{{ $page->cat }}</a>
+                                </li>
+                            @endforeach
+                            <li id="showMoreBtn" onclick="showMorePages()"> Xem thêm</li>
                         </ul>
+
+                        <script>
+                            function showMorePages() {
+                                var pageItems = document.getElementById('pageList').getElementsByClassName('page-item');
+                                for (var i = 0; i < pageItems.length; i++) {
+                                    pageItems[i].classList.add('visible');
+                                }
+                                document.getElementById('showMoreBtn').style.display = 'none';
+                            }
+
+                            window.addEventListener('DOMContentLoaded', function() {
+                                var pageItems = document.getElementById('pageList').getElementsByClassName('page-item');
+                                if (pageItems.length > 4) {
+                                    for (var i = 0; i < 4; i++) {
+                                        pageItems[i].classList.add('visible');
+                                    }
+                                    document.getElementById('showMoreBtn').style.display = 'block';
+                                } else {
+                                    for (var i = 0; i < pageItems.length; i++) {
+                                        pageItems[i].classList.add('visible');
+                                    }
+                                }
+                            });
+                        </script>
+
                     </div>
                     <!-- Grid column -->
 
@@ -455,78 +501,6 @@
 
     @yield('script')
     <script>
-        // $(document).ready(function() {
-        //     $("#cat_laptop").on("click", "li", function() {
-        //         var cat = $(this).html();
-        //         alert(cat);
-        //         var data = {
-        //             cat: cat
-        //         };
-        //         $.ajax({
-        //             url: "{{ route('product.show') }}",
-        //             // alert($(this).html());
-        //             method: "GET",
-        //             data: data,
-        //             dataType: "json",
-        //             // success: function(data) {
-        //             //    alert(data);
-        //             // console.log(data);
-        //             success: function(data) {
-        //                 // Xử lý dữ liệu nhận về từ server
-        //                 var products =
-        //                     data; // Giả sử dữ liệu $products được trả về dưới dạng JSON
-        //                 console.log(products.length)
-        //                 // Tạo biến để lưu nội dung mới
-        //                 var newContent = "";
-        //                 // var url =" {{ route('home') }}";
-        //                 var ASSET_URL = '{{ env('APP_URL') }}';
-        //                 var DETAIL_URL = '{{ env('APP_URL') }}./product/detail/';
-        //                 //    console.log(DETAIL_URL)
-        //                 // console.log(products.name);
-        //                 // Lặp qua danh sách $products và tạo nội dung mới
-        //                 for (var i = 0; i < products.length; i++) {
-        //                     newContent +=
-        //                         '<div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">' +
-        //                         '<div class="featured__item">' +
-        //                         '<div class="featured__item__pic set-bg"' +
-        //                         'style="background-image: url(\'' + ASSET_URL +
-        //                         products[i].img +
-        //                         '\')"' +
-        //                         'data-setbg="' +
-        //                         ASSET_URL +
-        //                         products[i].img +
-        //                         '">' +
-        //                         '<ul class="featured__item__pic__hover">' +
-
-        //                         '<li><a href="' +
-        //                         DETAIL_URL + products[i].id +
-        //                         '"><i class="fa fa-shopping-cart"></i></a></li>' +
-        //                         "</ul>" +
-        //                         "</div>" +
-        //                         '<div class="featured__item__text">' +
-        //                         '<h6><a href="#">' +
-        //                         products[i].name +
-        //                         "</a></h6>" +
-        //                         "<h5>" +
-        //                         products[i].price +
-        //                         " đ</h5>" +
-        //                         "</div>" +
-        //                         "</div>" +
-        //                         "</div>";
-
-        //                 }
-        //                 // console.log(newContent)
-
-        //                 // // Đưa nội dung mới vào container
-        //                 $("#product_laptop").html(newContent);
-        //                 // // }
-        //             },
-        //             error: function(xhr, status, error) {
-        //                 // console.error(xhr.responseText);
-        //             },
-        //         });
-        //     });
-        // });
         $(document).ready(function() {
             $(".cat_pro").on("click", "li", function() {
                 var cat = $(this).html();
@@ -552,7 +526,7 @@
                         console.log(data)
                         // Xử lý dữ liệu nhận về từ server
                         var products =
-                        data; // Giả sử dữ liệu $products được trả về dưới dạng JSON
+                            data; // Giả sử dữ liệu $products được trả về dưới dạng JSON
                         // console.log(products.length)
                         // Tạo biến để lưu nội dung mới
                         var newContent = "";

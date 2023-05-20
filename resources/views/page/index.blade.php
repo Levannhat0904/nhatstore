@@ -11,7 +11,8 @@
                     </div>
                     <dir><hr></dir>
                 </div>
-                <div>
+                
+                <div style="margin: 0 10%">
                     {!! $page->content !!}
                 </div>
             </div>
