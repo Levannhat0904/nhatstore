@@ -27,7 +27,7 @@
                                     <div
                                         style="font-size: 1.6rem; margin:0 20px 40px;text-align: justify; line-height: 20px; word-spacing: 5px;">
                                         <div style="color: rgba(37, 189, 245, 0.843); font-size: 1.7rem">
-                                            <b><i>{{ $post->cat->cat_item }}</i></b>
+                                            <b><i>{{ $post->cat->cat->cat }}{{ " - " }}{{ $post->cat->cat_item }}</i></b>
                                         </div>
                                         <div><b><i>{{ $post->title }}</i></b></div>
                                         <div><i><b><i class="fa-solid fa-calendar-days"></i></b></i>
