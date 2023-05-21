@@ -570,7 +570,7 @@
                                 products[i].name +
                                 "</a></h6>" +
                                 "<h5>" +
-                                    number_format(products[i].price, 0, ',', '.') + 'vnđ' +
+                                number_format(products[i].price, 0, ',', '.') + 'vnđ' +
                                 "</h5>" +
                                 "</div>" +
                                 "</div>" +
