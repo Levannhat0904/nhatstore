@@ -61,7 +61,7 @@
 
                                 @foreach ($colorProducts as $color)
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="color[]"
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox{{$color->id}}" name="color[]"
                                             @php
                                                 $color_product =json_decode($product->color); 
                                                 if(in_array($color->color_name,$color_product)){
@@ -70,7 +70,7 @@
                                             @endphp
                                             value="{{ $color->color_name }}">
                                         <label class="form-check-label"
-                                            for="inlineCheckbox1">{{ $color->color_name }}</label>
+                                            for="inlineCheckbox{{$color->id}}">{{ $color->color_name }}</label>
                                     </div>
                                 @endforeach
                                 {{-- <textarea name="" class="form-control" id="intro" cols="30" rows="5"></textarea> --}}
