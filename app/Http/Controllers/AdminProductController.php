@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\File;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class AdminProductController extends Controller
 {
@@ -149,7 +150,7 @@ class AdminProductController extends Controller
     {
         // return $request->all();
         $validatedData = $request->validate([
-            'cat_item' => ['required', 'unique:cat_posts', 'max:255'],
+            'cat_item' => ['required', 'unique:cat_products', 'max:255'],
             'cat_parent' => 'required',
         ]);
         // return $request->all();
@@ -229,8 +230,14 @@ class AdminProductController extends Controller
     }
     function update_cat_item(Request $request, $id)
     {
+        $cat_product = CatProduct::find($id);
+        
         $validatedData = $request->validate([
-            'cat_item' => ['required', 'unique:cat_posts', 'max:255'],
+            'cat_item' => [
+                'required',
+                'max:255',
+                Rule::unique('cat_products')->ignore($cat_product->id, 'id'),
+            ],
             'cat_parent' => 'required',
         ]);
 
