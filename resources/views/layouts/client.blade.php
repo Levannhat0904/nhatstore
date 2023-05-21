@@ -496,11 +496,13 @@
     <script src="{{ asset('js/mixitup.min.js') }} "></script>
     <script src="{{ asset('js/owl.carousel.min.js') }} "></script>
     <script src="{{ asset('js/app.js') }} "></script>
+    {{-- <script src="{{ asset('js/main.js') }}"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     {{-- <script src="{{ asset('js/app.js') }} "></script> --}}
 
     @yield('script')
     <script>
+        
         $(document).ready(function() {
             $(".cat_pro").on("click", "li", function() {
                 var cat = $(this).html();

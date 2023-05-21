@@ -29,7 +29,7 @@
                         <div class="col-lg-3">
                             <a href="{{ route('product.detail', $p->id) }}">
                                 <div class="categories__item set-bg" data-setbg="{{ asset($p->img) }}"
-                                    style="width: 200px; height: 200px;display: flexbox; margin: 0 auto;">
+                                    style="width: 200px; height: 200px;display: flexbox; background-image:url('{{ asset($p->img) }}');margin: 0 auto;">
                                 </div>
                             </a>
                             <div>
@@ -85,7 +85,7 @@
                                         <div class="featured__item">
 
                                             <div class="featured__item__pic img set-bg"
-                                                data-setbg="{{ asset($product->img) }} ">
+                                                data-setbg="{{ asset($product->img) }} " style="background-image:url('{{ asset($product->img) }}') ">
                                                 <ul class="featured__item__pic__hover">
                                                     <li>
                                                         <a href="{{ route('product.detail', $product->id) }}">

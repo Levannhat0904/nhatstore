@@ -218,11 +218,12 @@
                     </div>
                 </div>
             </div>
+            
             <div class="row">
                 @foreach ($product_same as $v)
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="product__item">
-                        <div class="product__item__pic set-bg"  data-setbg="{{ asset($v->img) }}">
+                        <div class="product__item__pic set-bg" style="background-image: url('{{ asset($v->img) }}');"  data-setbg="{{ asset($v->img) }}">
                             <ul class="product__item__pic__hover">
                                 {{-- <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                 <li><a href="#"><i class="fa fa-retweet"></i></a></li> --}}

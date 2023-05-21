@@ -67,14 +67,17 @@
                                 display: none;
                             }
                         </style>
-
+                        
                         <div id="product-container" class="row">
                             @foreach ($products as $product)
                                 <div
                                     class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat item {{ $product->productCat->id }}">
-                                    <div class="featured__item">
-                                        <div class="featured__item__pic img set-bg"
-                                            data-setbg="{{ asset($product->img) }} ">
+                                    <div class="featured__item cart_product">
+
+                                        <div class="featured__item__pic img product_img set-bg"
+                                            data-setbg="{{ asset($product->img) }}"
+                                            style="background-image: url('{{ asset($product->img) }}')">
+
                                             <ul class="featured__item__pic__hover">
                                                 <li>
                                                     <a href="{{ route('product.detail', $product->id) }}">
@@ -94,12 +97,12 @@
 
                         <div class="row" style="justify-content: center ; font-size: 1.6rem">
 
-                             <div id="load-more-container">
+                            <div id="load-more-container">
                                 <button id="load-more-btn"
                                     style="font-size: 1.6rem;color: #fff;
                                         background-color: #c11b39;
                                         border-color: #c11b39;">
-                                        Xemthêm</button>
+                                    Xemthêm</button>
                             </div>
                         </div>
 
@@ -149,7 +152,8 @@
                                     <div class="featured__item">
 
                                         <div class="featured__item__pic img set-bg"
-                                            data-setbg="{{ asset($product->img) }} ">
+                                            data-setbg="{{ asset($product->img) }} "
+                                            style="background-image: url('{{ asset($product->img) }}')">
                                             <ul class="featured__item__pic__hover">
                                                 <li>
                                                     <a href="{{ route('product.detail', $product->id) }}">
@@ -174,7 +178,7 @@
                                     style="font-size: 1.6rem;color: #fff;
                                         background-color: #c11b39;
                                         border-color: #c11b39;">
-                                        Xemthêm</button>
+                                    Xemthêm</button>
                             </div>
                         </div>
                         {{-- </div> --}}
