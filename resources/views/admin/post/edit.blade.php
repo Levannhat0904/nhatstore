@@ -16,6 +16,14 @@
                         @enderror
                     </div>
                     <div class="form-group">
+                        <label for="img">Ảnh</label>
+                        <div></div>
+                        <input type="file" name="img" old('img') multiple="multiple" id="img">
+                    </div>
+                    @error('img')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                    <div class="form-group">
                         <label for="content">Nội dung bài viết</label>
                         <textarea name="content" class="form-control"  id="content" cols="30" rows="5">{{$post->content}}</textarea>
                         @error('content')

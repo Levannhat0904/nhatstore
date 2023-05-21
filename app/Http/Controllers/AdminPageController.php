@@ -178,7 +178,7 @@ class AdminPageController extends Controller
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
                 'cat' => $request->input('category'),
-                'user_id' =>  Auth::id(),
+                'user_id' =>  Auth::id(),   
                 'slug'=>$slug
             ]);
             return redirect('admin/page/list')->with('status', 'đã cập nhật bài viết thành công');
