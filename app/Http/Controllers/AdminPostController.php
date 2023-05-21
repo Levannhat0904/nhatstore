@@ -97,7 +97,7 @@ class AdminPostController extends Controller
                 'title' => 'required',
                 'content' => 'required',
                 'category' => 'required',
-                'img' => 'required|mimes:jpeg,jpg,png,gif|max:2048',
+                // 'img' => 'required|mimes:jpeg,jpg,png,gif|max:2048',
             ],
             [
                 'required' => ':attribute không được để trống',

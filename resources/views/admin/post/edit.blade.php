@@ -6,7 +6,7 @@
                 Cập nhật bài viết
             </div>
             <div class="card-body">
-                <form action="{{route('update_post', $post->id)}}" method="POST">
+                <form action="{{route('update_post', $post->id)}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="title">Tiêu đề bài viết</label>
