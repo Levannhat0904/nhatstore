@@ -8,8 +8,11 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use GuzzleHttp\Middleware;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule as ValidationRule;
+
 use function PHPUnit\Framework\returnSelf;
 
 class AdminPostController extends Controller
@@ -97,7 +100,7 @@ class AdminPostController extends Controller
                 'title' => 'required',
                 'content' => 'required',
                 'category' => 'required',
-                // 'img' => 'required|mimes:jpeg,jpg,png,gif|max:2048',
+                'img' => 'required|mimes:jpeg,jpg,png,gif|max:2048',
             ],
             [
                 'required' => ':attribute không được để trống',
@@ -279,8 +282,16 @@ class AdminPostController extends Controller
     }
     function update_cat_item(Request $request, $id)
     {
+        // return $id;
+        $cat_post=cat_post::find($id);
+        // return  $cat_item;
         $validatedData = $request->validate([
-            'cat_item' => ['required', 'unique:cat_posts', 'max:255'],
+            // 'cat_item' => 'required|max:255|unique:cat_posts,cat,'.$cat_post->id,
+            'cat_item' => [
+                'required',
+                'max:255',
+                Rule::unique('cat_posts')->ignore($cat_post->id, 'id'),
+            ],
             'cat_parent' => 'required',
         ]);
 
@@ -311,11 +322,16 @@ class AdminPostController extends Controller
     }
     function update_cat(Request $request, $id)
     {
+        $cat_edit =cat::find($id);
         $cat = $request->input('cat');
         $slug = "post." . $cat;
         // return $slug;
         $validatedData = $request->validate([
-            'cat' => ['required', 'unique:cats', 'max:255'],
+            'cat' => [
+                'required',
+                'max:255',
+                Rule::unique('cats')->ignore($cat_edit->id, 'id'),
+            ],
 
         ]);
         cat::where('id', $id)->update([
