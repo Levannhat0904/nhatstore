@@ -134,7 +134,7 @@ class AdminPostController extends Controller
             'img'=>$input['img'],
             'user_id' =>  Auth::id()
         ]);
-        return redirect('admin/post/list')->with('status', 'Thêm bài viết thành công');
+        return redirect('admin/post/list')->with('status', 'Cập bài viết thành công');
     }
     function delete($id)
     {
@@ -338,7 +338,7 @@ class AdminPostController extends Controller
             'cat' => $cat,
             'slug' => $slug
         ]);
-        return redirect('admin/post/cat')->with('status', 'Đã thêm danh mục thành công');
+        return redirect('admin/post/cat')->with('status', 'Đã cập nhật danh mục thành công');
     }
     function delete_cat($id)
     {
