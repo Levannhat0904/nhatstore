@@ -502,8 +502,17 @@
 
     @yield('script')
     <script>
-        
         $(document).ready(function() {
+            function number_format(number, decimals, dec_point, thousands_sep) {
+                // Định dạng số nguyên theo yêu cầu
+                var formattedNumber = number.toFixed(decimals).replace('.', dec_point);
+                if (thousands_sep) {
+                    var parts = formattedNumber.split(dec_point);
+                    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousands_sep);
+                    formattedNumber = parts.join(dec_point);
+                }
+                return formattedNumber;
+            }
             $(".cat_pro").on("click", "li", function() {
                 var cat = $(this).html();
                 var dataCatValue = $(this).data('cat');
@@ -561,8 +570,8 @@
                                 products[i].name +
                                 "</a></h6>" +
                                 "<h5>" +
-                                products[i].price +
-                                " đ</h5>" +
+                                    number_format(products[i].price, 0, ',', '.') + 'vnđ' +
+                                "</h5>" +
                                 "</div>" +
                                 "</div>" +
                                 "</div>";
