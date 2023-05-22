@@ -37,7 +37,8 @@ class AdminUserController extends Controller
                 'forceDelete'=>'Xóa vĩnh viễn'
             ];
             $users = User::onlyTrashed()->paginate(10);
-        } if($status == 'active'){
+           
+        }else if($status == 'active'){
             // $keyword = "";
             $users = User::paginate(10);
         }else {
@@ -52,6 +53,7 @@ class AdminUserController extends Controller
         $count_user_active = User::count();
         $count_user_trash = User::onlyTrashed()->count();
         $count = [$count_user_active, $count_user_trash];
+        // return $users;
         return view('admin.user.list', compact('users', 'count', 'list_act','roles'));
     }
     function add(Request $request)

@@ -2,11 +2,13 @@
 @section('content')
     <div id="content" class="container-fluid">
         <div class="card">
-            @if ('status')
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
+            @if(!empty(session('status')))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                
             @endif
+
             <div class="card-header font-weight-bold d-flex justify-content-between align-items-center">
                 <h5 class="m-0 ">Danh sách sản phẩm</h5>
                 <div class="form-search form-inline">
@@ -112,15 +114,16 @@
                                         <td>{{ $product->price }}</td>
                                         <td>{{ $product->productCat->cat_item }}</td>
                                         <td>{{ $product->created_at }}</td>
-                                        @if ($product->total>0)
-                                        <td><span class="badge badge-success">{{"Còn hàng"}}</span>  </td>
+                                        @if ($product->total > 0)
+                                            <td><span class="badge badge-success">{{ 'Còn hàng' }}</span> </td>
                                         @else
-                                        <td><span class="badge badge-warning">{{ "Hết hàng" }}</span></td>
+                                            <td><span class="badge badge-warning">{{ 'Hết hàng' }}</span></td>
                                         @endif
-                                      
+
                                         <td>
-                                            <a href="{{ route('admin.edit_product', $product->id) }}" class="btn btn-success btn-sm rounded-0 text-white"
-                                                type="button" data-toggle="tooltip" data-placement="top" title="Edit"><i
+                                            <a href="{{ route('admin.edit_product', $product->id) }}"
+                                                class="btn btn-success btn-sm rounded-0 text-white" type="button"
+                                                data-toggle="tooltip" data-placement="top" title="Edit"><i
                                                     class="fa fa-edit"></i></a>
                                             <a href="{{ route('admin.delete_product', $product->id) }}"
                                                 onclick="return confirm('Bạn có chắc chắn xóa sản phẩm này')"

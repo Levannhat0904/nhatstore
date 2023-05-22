@@ -2,10 +2,11 @@
 @section('content')
     <div id="content" class="container-fluid">
         <div class="card">
-            @if ('status')
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
+            @if(!empty(session('status')))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                
             @endif
             <div class="card-header font-weight-bold d-flex justify-content-between align-items-center">
                 <h5 class="m-0 ">Danh sách thành viên</h5>
@@ -44,7 +45,7 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Họ tên</th>
                                 <th scope="col">Username</th>
-                                <th scope="col">Email</th>
+                                {{-- <th scope="col">Email</th> --}}
                                 <th scope="col">Quyền</th>
                                 <th scope="col">Ngày tạo</th>
                                 @if ((isset($_GET['status']) && $_GET['status'] != 'trash') || !isset($_GET['status']))
@@ -70,7 +71,7 @@
                                         </td>
                                         <td scope="row">{{ $t }}</td>
                                         <td>{{ $user->name }}</td>
-                                        <td>LeVanNhat</td>
+                                        {{-- <td>LeVanNhat</td> --}}
                                         <td>{{ $user->email }}</td>
                                         <td>
                                             @foreach ($user->roles as $role)

@@ -3,7 +3,6 @@
     integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous">
 </script>
 @section('navbar')
-    
 @endsection
 @section('content')
     <section class="categories">
@@ -11,7 +10,7 @@
             {{-- <div class="section-title"><img style="width: 500px; height: 90px; " src="{{ asset('img/tophot.png') }}"
                     alt="title" loading="lazy">
             </div> --}}
-            
+
             <div class="row">
                 <div class="cb_tip"><span id="dot"><img src="//clickbuy.com.vn/clipse.svg" alt="clipse"></span>
                     <div class="textwidget">
@@ -23,25 +22,25 @@
                             </a>
                         </p>
                     </div>
-                
-                <div class="categories__slider owl-carousel">
-                    @foreach ($product_hots as $p)
-                        <div class="col-lg-3">
-                            <a href="{{ route('product.detail', $p->id) }}">
-                                <div class="categories__item set-bg" data-setbg="{{ asset($p->img) }}"
-                                    style="width: 200px; height: 200px;display: flexbox; background-image:url('{{ asset($p->img) }}');margin: 0 auto;">
+
+                    <div class="categories__slider owl-carousel">
+                        @foreach ($product_hots as $p)
+                            <div class="col-lg-3">
+                                <a href="{{ route('product.detail', $p->id) }}">
+                                    <div class="categories__item set-bg" data-setbg="{{ asset($p->img) }}"
+                                        style="width: 200px; height: 200px;display: flexbox; background-image:url('{{ asset($p->img) }}');margin: 0 auto;">
+                                    </div>
+                                </a>
+                                <div>
+                                    <h5 style="text-align: center">
+                                        <p>{{ $p->name }}</p>
+                                    </h5>
                                 </div>
-                            </a>
-                            <div>
-                                <h5 style="text-align: center">
-                                    <p>{{ $p->name }}</p>
-                                </h5>
+                                {{-- <h5><b style="text-align: center">Mua Ngay</b></h5> --}}
                             </div>
-                            {{-- <h5><b style="text-align: center">Mua Ngay</b></h5> --}}
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
     </section>
@@ -78,29 +77,35 @@
 
                         <div id="product-list">
                             <div class="row featured__filter catagory_{{ Str::slug($key, '_') }}" id="productContainer">
-                                @foreach ( collect($productx)->take(12) as $product)
-                                {{-- @foreach ($productx->paginate(10) as $product) --}}
+                                @foreach (collect($productx)->take(12) as $product)
+                                    {{-- @foreach ($productx->paginate(10) as $product) --}}
 
+                                   
                                     <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
-                                        <div class="featured__item">
+                                            <div class="featured__item">
 
-                                            <div class="featured__item__pic img set-bg"
-                                                data-setbg="{{ asset($product->img) }} " style="background-image:url('{{ asset($product->img) }}') ">
-                                                <ul class="featured__item__pic__hover">
-                                                    <li>
-                                                        <a href="{{ route('product.detail', $product->id) }}">
-                                                            <i class="fa fa-shopping-cart"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="featured__item__text">
-                                                <h6><a href="#">{{ $product->name }}</a></h6>
-                                                <h5>{{ number_format($product->price, 0, ',', '.') }}{{ 'vnđ' }}
-                                                </h5>
+                                                <div class="featured__item__pic img set-bg"
+                                                    data-setbg="{{ asset($product->img) }}"
+                                                    style="background-image:url('{{ asset($product->img) }}') ">
+
+                                                    <ul class="featured__item__pic__hover">
+                                                        <li>
+                                                            <a href="{{ route('product.detail', $product->id) }}">
+                                                                <i class="fa fa-shopping-cart"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="featured__item__text">
+                                                    <h6><a
+                                                            href="{{ route('product.detail', $product->id) }}">{{ $product->name }}</a>
+                                                    </h6>
+                                                    <h5>{{ number_format($product->price, 0, ',', '.') }}{{ 'vnđ' }}
+                                                    </h5>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    
                                 @endforeach
                             </div>
                         </div>
@@ -328,7 +333,7 @@
     <!-- Latest Product Section End -->
 
     <!-- Blog Section Begin -->
-    
+
     <!-- Blog Section End -->
 
     <!-- Footer Section Begin -->

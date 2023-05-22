@@ -87,7 +87,7 @@
                                             </ul>
                                         </div>
                                         <div class="featured__item__text">
-                                            <h6><a href="#">{{ $product->name }}</a></h6>
+                                            <h6><a href="{{ route('product.detail', $product->id) }}">{{ $product->name }}</a></h6>
                                             <h5>{{ number_format($product->price, 0, ',', '.') }}{{ 'vnđ' }}</h5>
                                         </div>
                                     </div>
@@ -163,7 +163,7 @@
                                             </ul>
                                         </div>
                                         <div class="featured__item__text">
-                                            <h6><a href="#">{{ $product->name }}</a></h6>
+                                            <h6><a href="{{ route('product.detail', $product->id) }}">{{ $product->name }}</a></h6>
                                             <h5>{{ number_format($product->price, 0, ',', '.') }}{{ 'vnđ' }}
                                             </h5>
                                         </div>

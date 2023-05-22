@@ -1,11 +1,12 @@
 @extends('layouts.admin')
 @section('content')
     <div id="content" class="container-fluid">
-        @if (session('status'))
-            <div class="alert alert-success" role="alert">
-                {{ session('status') }}
-            </div>
-        @endif
+        @if(!empty(session('status')))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                
+            @endif
         <div class="card">
             <div class="card-header font-weight-bold d-flex justify-content-between align-items-center">
                 <h5 class="m-0 ">Danh sách vai trò</h5>

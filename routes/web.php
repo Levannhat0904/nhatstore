@@ -44,7 +44,8 @@ Route::get('/page/{cat}', [PageController::class, 'index'])->name('page.index');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/detail{id}', [BlogController::class, 'detail'])->name('blog.detail');
 
-Route::get('/dashbroad', [DashboardController::class, 'show'])->middleware('auth');
+Route::get('/dashbroad', [DashboardController::class, 'show'])->middleware(['auth', 'can:post.manager','can:page.manager','can:product.manager','can:order.manager','can:user.manager','can:role.manager']);
+Route::get('/admin', [DashboardController::class, 'admin'])->middleware(['auth', 'can:post.manager','can:page.manager','can:product.manager','can:order.manager','can:user.manager','can:role.manager']);
 Route::get('/user/profile', [UserController::class, 'index'])->name('user.profile')->middleware('auth');
 Route::middleware(['auth', 'can:post.manager'])->group(function () {
     //
