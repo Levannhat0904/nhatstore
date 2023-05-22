@@ -82,7 +82,7 @@
                         <div class="d-flex justify-content-between pt-2">
                             <p class="fw-bold mb-0">Email: {{ $order->email }}</p>
                             <p class="text-muted mb-0"><span class="fw-bold me-4">Tổng tiền:
-                                    {{ $order->total_order - 30000 }}
+                                    {{ $order->total_order}}
                         </div>
 
                         <div class="d-flex justify-content-between pt-2">

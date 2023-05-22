@@ -99,7 +99,7 @@ class ProductController extends Controller
         // return $id;
         $product = product::find($id);
         $name = $product->name;
-        $sub_total = $qty * ($product->price) + 30000; //phí ship 30k
+        $sub_total = $qty * ($product->price); //phí ship 30k
         $img = $product->img;
         $data = array(
             'id' => $id,
@@ -218,7 +218,7 @@ class ProductController extends Controller
             'phone_number' => $phone_number,
             'email' => $email,
             'username' => $username,
-            'total_order' => Cart::total(0, '', '') + 30000,
+            'total_order' => Cart::total(0, '', ''),
             'status' => 'Đang chờ gửi hàng',
             'orderCode' => (string)$orderCode,
             'total' => Cart::count() //so luong item mua

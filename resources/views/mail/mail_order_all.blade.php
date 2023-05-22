@@ -75,7 +75,7 @@
                                             <strong>Phương thức thanh toán: </strong> Thanh toán tiền mặt khi nhận
                                             hàng<br>
                                             <strong>Thời gian giao hàng dự kiến:</strong> Dự kiến giao hàng {{$date->modify('+3 day')->format('Y-m-d')}} - không giao ngày Chủ Nhật <br>
-                                            <strong>Phí vận chuyển: </strong> 30.000đ<br>
+                                            <strong>Phí vận chuyển: </strong> 0vnđ<br>
                                             {{-- <strong>Sử dụng bọc sách cao cấp Bookcare: </strong>  Không <br> --}}
                                         </p>
                                     </td>
@@ -144,7 +144,7 @@
                                 </tr>
                                 <tr>
                                     <td align="right" colspan="4" style="padding:5px 9px">Phí vận chuyển</td>
-                                    <td align="right" style="padding:5px 9px"><span>30.000vnđ</span></td>
+                                    <td align="right" style="padding:5px 9px"><span>0vnđ</span></td>
                                 </tr>
 
                                 <tr bgcolor="#eee">
@@ -152,7 +152,7 @@
                                                 đơn hàng</big> </strong></td>
                                     <td align="right" style="padding:7px 9px">
 
-                                        <strong><big><span>{{number_format($product->total(0, '', '') + 30000,0,',','.') }}{{ 'vnđ' }}</span>
+                                        <strong><big><span>{{number_format($product->total(0, '', ''),0,',','.') }}{{ 'vnđ' }}</span>
                                             </big> </strong></td>
                                 </tr>
                                 {{-- <tr bgcolor="#eee">
