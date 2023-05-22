@@ -117,12 +117,21 @@
             <ul>
                 <li class="active"><a href="{{ route('home') }}">Home</a></li>
                 {{-- <li><a href="./shop-grid.html">Shop</a></li> --}}
-                <li><a href="#">Pages</a>
+                {{-- <li><a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
                         <li><a href="./shop-details.html">Shop Details</a></li>
                         <li><a href="./shoping-cart.html">Shoping Cart</a></li>
                         <li><a href="./checkout.html">Check Out</a></li>
                         <li><a href="./blog-details.html">Blog Details</a></li>
+                    </ul>
+                </li> --}}
+                <li><a href="#">Pages</a>
+                    <ul class="header__menu__dropdown">
+                        @foreach ($pages as $page)
+                            {{-- $pages là biến toàn cục dc dịnh nghĩa trong appseviceprovider --}}
+                            <li><a href="{{ route('page.index', $page->slug) }}">{{ $page->cat }}</a>
+                            </li>
+                        @endforeach
                     </ul>
                 </li>
                 <li><a href="{{ route('blog.index') }}">Tin tức</a></li>
@@ -394,9 +403,9 @@
                             }
                         </style>
                         <ul>
-                            <li class="text-reset">106 - Trần Bình - Cầu Giấy - Hà Nội</li>
-                            <li class="text-reset">0987.654.321 - 0989.989.989</li>
-                            <li class="text-reset">vshop@gmail.com</li>
+                            <li class="text-reset"> Số 16 ngõ 66 Phùng Hưng - Hà Đông - Hà Nội</li>
+                            <li class="text-reset">0965 203 734</li>
+                            <li class="text-reset">himanhatdz203@gmail.com</li>
                         </ul>
                     </div>
                     <!-- Grid column -->
@@ -461,7 +470,7 @@
                     <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                         <!-- Links -->
                         <h6 class="text-uppercase fw-bold mb-4">Liên Hệ</h6>
-                        <p><i class="fas fa-home me-3 text-secondary"></i> 70Phùng Hưng - Hà Đông - Hà Nội</p>
+                        <p><i class="fas fa-home me-3 text-secondary"></i> Số 16 ngõ 66 Phùng Hưng - Hà Đông - Hà Nội</p>
                         <p>
                             <i class="fas fa-envelope me-3 text-secondary"></i>
                             hiamnhatdz203@gmail.com
