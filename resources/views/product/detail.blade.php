@@ -231,7 +231,7 @@
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6><a href="#">{{$v->name}}</a></h6>
+                            <h6><a href="{{ route('product.detail', $v->id) }}">{{$v->name}}</a></h6>
                             <h5>{{ number_format($v->price, 0, ',', '.') }}{{ 'vnđ' }}</h5>
                         </div>
                     </div>
