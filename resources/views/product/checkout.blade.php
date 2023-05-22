@@ -70,8 +70,8 @@
                     <form action="{{ route('product.order') }}" method="get">
             @endif
             <h4 class="d-flex justify-content-between align-items-center mb-3">
-                <span class="text-muted">Your cart</span>
-                <span class="badge badge-secondary badge-pill">3</span>
+                <span class="text-muted">Giỏ hàng</span>
+                <span class="badge badge-secondary badge-pill"></span>
             </h4>
             <table class="table table-striped" style="font-size: 1.6rem">
                 <thead>
@@ -134,16 +134,16 @@
 
 
             {{-- {{-- <form class="card p-2"> --}}
-            <div class="input-group">
-                <input type="text" class="form-control ch" placeholder="Promo code">
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-secondary">Redeem</button>
-                </div>
-            </div>
+                {{-- <div class="input-group">
+                    <input type="text" class="form-control ch" placeholder="Promo code">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-secondary">Redeem</button>
+                    </div>
+                </div> --}}
             {{-- </form> --}}
         </div>
         <div class="col-md-5 order-md-1">
-            <h4 class="mb-3">Billing address</h4>
+            <h4 class="mb-3">Thông tin người mua</h4>
             {{-- <form class="needs-validation" novalidate=""> --}}
             {{-- <div class="row">
             
