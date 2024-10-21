@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cat_posts', function (Blueprint $table) {
-            $table->id();
-            $table->string('cat_item');
-            $table->unsignedBigInteger('cat_id');
-            $table->foreign('cat_id')->references('id')->on('cats')->onDelete('cascade');
-            $table->timestamps();
+        Schema::table('posts', function (Blueprint $table) {
+            //
+            $table->softDeletes();
         });
     }
 
@@ -29,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cat_posts');
+        Schema::table('posts', function (Blueprint $table) {
+            //
+        });
     }
 };

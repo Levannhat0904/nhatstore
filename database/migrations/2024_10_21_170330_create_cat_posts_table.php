@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('cat_posts', function (Blueprint $table) {
             $table->id();
-            $table->string('title',200);
-            $table->text('content')->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->string('cat_item');
             $table->unsignedBigInteger('cat_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('cat_id')->references('id')->on('cat_posts')->onDelete('cascade');
+            $table->foreign('cat_id')->references('id')->on('cats')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('cat_posts');
     }
 };
