@@ -114,7 +114,7 @@
                         <i class="arrow fas fa-angle-right"></i>
                     </li>
                     
-                    @can('page.manager')
+                    <!-- @can('page.manager') -->
                     <li class="nav-link {{ $module_active == 'page' ? 'active' : '' }}">
                         <a href="{{ url('admin/page/list') }}">
                             <div class="nav-link-icon d-inline-flex">
@@ -129,7 +129,8 @@
                             <li><a href="{{ url('admin/page/list') }}">Danh sách</a></li>
                         </ul>
                     </li>
-                    @endcan
+                    <!-- @endcan -->
+                    <!-- @can('post.manager') -->
                     <li class="nav-link {{ $module_active == 'post' ? 'active' : '' }}">
                         <a href="{{ url('admin/post/list') }}">
                             <div class="nav-link-icon d-inline-flex">
@@ -144,6 +145,8 @@
                             <li><a href="{{ url('admin/post/cat') }}">Danh mục</a></li>
                         </ul>
                     </li>
+                    <!-- @endcan -->
+                    <!-- @can('product.manager') -->
                     <li class="nav-link {{ $module_active == 'product' ? 'active' : '' }}">
                         <a href="{{ url('admin/product/list') }}">
                             <div class="nav-link-icon d-inline-flex">
@@ -159,6 +162,8 @@
                             <li><a href="{{ url('admin/product/color') }}">Màu sắc</a></li>
                         </ul>
                     </li>
+                    <!-- @endcan -->
+                    <!-- @can('order.manager') -->
                     <li class="nav-link">
                         <a href="{{ url('admin/order/list') }}">
                             <div class="nav-link-icon d-inline-flex">
@@ -171,6 +176,8 @@
                             <li><a href="{{ url('admin/order/list') }}">Đơn hàng</a></li>
                         </ul>
                     </li>
+                    <!-- @endcan -->
+                    <!-- @can('user.manager') -->
                     <li class="nav-link {{ $module_active == 'user' ? 'active' : '' }} ">
                         <a href="{{ url('admin/user/list') }}">
                             <div class="nav-link-icon d-inline-flex">
@@ -185,6 +192,8 @@
                             <li><a href="{{ url('admin/user/list') }}">Danh sách</a></li>
                         </ul>
                     </li>
+                    <!-- @endcan -->
+                    <!-- @can('role.manager') -->
                     <li class="nav-link {{ $module_active == 'permission' ? 'active' : '' }}">
                         <a href="{{ route('permission.add') }}">
                             <div class="nav-link-icon d-inline-flex">
@@ -199,6 +208,7 @@
                             <li><a href="{{ route('role.index') }}">Danh sách vai trò</a></li>
                         </ul>
                     </li>
+                    <!-- @endcan -->
 
                     <!-- <li class="nav-link"><a>Bài viết</a>
                         <ul class="sub-menu">

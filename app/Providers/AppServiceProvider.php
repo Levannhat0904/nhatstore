@@ -27,11 +27,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // $pages=Page::all();
-        // //
-        // Paginator::useBootstrap();
-        // $product_cats = cat::where('slug', 'LIKE', 'product.%')->get();
-        // View::share(['pages'=>$pages,'product_cats'=>$product_cats]);
+        $pages=Page::all();
+        //
+        Paginator::useBootstrap();
+        $product_cats = cat::where('slug', 'LIKE', 'product.%')->get();
+        View::share(['pages'=>$pages,'product_cats'=>$product_cats]);
     }
 }
 

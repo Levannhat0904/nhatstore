@@ -42,7 +42,6 @@
                             @error('thumbnail')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
-
                             <div class="form-group">
                                 <label for="img">Ảnh đại diện</label>
                                 <div></div>
